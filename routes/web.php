@@ -19,6 +19,7 @@ use App\Http\Controllers\{
 
 // Public Routes
 Route::get('/', fn() => view('home'))->name('home');
+
 Route::resource('services', ServiceController::class);
 Route::resource('events', EventController::class);
 Route::resource('webinars', WebinarController::class);
@@ -48,4 +49,3 @@ Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin
 
 // Breeze Auth Routes
 require __DIR__.'/auth.php';
- 
