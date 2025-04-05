@@ -1,36 +1,56 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="@yield('description', 'FuzionMobile - Empowering Education')">
+    <title>FuzionMobile - @yield('title', 'Home')</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'public/frontend/assets/css/bootstrap.min.css',
+        'public/frontend/assets/css/animate.css',
+        'public/frontend/assets/css/font-awesome.min.css',
+        'public/frontend/assets/css/magnific-popup.css',
+        'public/frontend/assets/css/nice-select.css',
+        'public/frontend/assets/css/slick.css',
+        'public/frontend/assets/css/default.css',
+        'public/frontend/assets/css/style.css',
+        'public/frontend/assets/css/responsive.css',
+    ])
+</head>
+<body>
+    <x-frontend.preloader />
+    <x-frontend.header />
+    <main>
+        @yield('content')
+    </main>
+    <x-frontend.footer />
+    <x-frontend.back-to-top />
+    @vite(['resources/js/app.js'])
+    <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/slick.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.appear.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+    <script>
+        $(document).ready(function() {
+            $('.navbar-toggler').on('click', function(e) {
+                e.preventDefault();
+                var $navbarContent = $('#navbarSupportedContent');
+                $navbarContent.toggleClass('show');
+            });
+        });
+    </script>
+</body>
 </html>

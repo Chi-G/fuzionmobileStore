@@ -14,11 +14,12 @@ use App\Http\Controllers\{
     ProductController,
     PostController,
     SubscriberController,
-    ProfileController
+    ProfileController,
+    HomeController
 };
 
 // Public Routes
-Route::get('/', fn() => view('home'))->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::resource('services', ServiceController::class);
 Route::resource('events', EventController::class);
