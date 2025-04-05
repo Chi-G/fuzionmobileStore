@@ -29,7 +29,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="FuzionMobile Logo">
+                    <img src="{{ asset('logo.png') }}" alt="FuzionMobile Logo">
                 </a>
                 <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
                     <span class="toggler-icon"></span>
