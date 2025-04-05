@@ -1,58 +1,3 @@
-/*
-    Template Name: Edustdy – Education Html Template
-    Template URI: site.com
-    Description: Edustdy – Education Html Template
-    Author: raistheme
-    Author URI: https://raistheme.com/
-    Version: 1.0
-*/
-
-/* CSS Index
------------------------------------
-
-    01.Theme default
-    02.Header
-    03.Slider
-    04.Features
-    05.About
-    06.Counter
-    07.About 2
-    08.Program
-    09.Why Choose Us
-    10.Courses
-    11.Testimonial
-    12.Team
-    13.Event
-    14.Blog
-    15.Footer
-    16.Courses Form
-    17.About 3
-    18.Features
-    19.Courses 2
-    20.testimonial 2
-    21.About 4
-    22.EVENT 2
-    23.Pricing
-    24.Category
-    25.Register
-    26.Testimonial author
-    27.EVENT 3
-    28.About 4
-    29.Skill
-    30.Why Chooses
-    31.Testimonial
-    32.Countdown 2
-    33.Page Banner
-    34.Blog List Page
-    35.Sidebar
-    36.Blog Details
-    37.Courses Details Banner
-    38.Courses Details
-    39.Contact
-
-*/
-
-
 /*===========================
      01.Theme default css
 ===========================*/
@@ -917,28 +862,28 @@ p {
 @media (min-width: 992px) {
     .navbar.navbar-expand-lg {
         display: flex;
-        justify-content: space-between; /* Distribute space between logo, nav, and meta */
+        justify-content: space-between;
         align-items: center;
     }
 
     .navbar.navbar-expand-lg .navbar-collapse {
-        display: flex !important; /* Ensure visibility */
-        justify-content: center; /* Center the nav within its container */
-        flex-grow: 1; /* Allow it to take available space */
+        display: flex !important;
+        justify-content: center;
+        flex-grow: 1;
     }
 
     .navbar.navbar-expand-lg .navbar-nav {
         display: flex !important;
         visibility: visible !important;
-        margin: 0 auto; /* Center within navbar-collapse */
+        margin: 0 auto;
     }
 
     .navbar-brand {
-        margin-right: 20px; /* Space between logo and nav */
+        margin-right: 20px;
     }
 
     .navbar_meta {
-        margin-left: 20px; /* Space between nav and meta icons */
+        margin-left: 20px;
     }
 }
 
