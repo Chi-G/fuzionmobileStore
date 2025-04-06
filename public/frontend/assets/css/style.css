@@ -363,6 +363,74 @@ p {
     color: #fff;
 }
 
+/*===========================
+     start dashbaord Header dropdown css
+===========================*/
+.header_top_login .dropdown {
+    position: relative;
+}
+
+.header_top_login .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.header_top_login .dropdown-menu {
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    padding: 10px 0;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+}
+
+.header_top_login .dropdown-item {
+    color: #333;
+    font-size: 14px;
+    padding: 10px 20px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.header_top_login .dropdown-item:hover,
+.header_top_login .dropdown-item:focus {
+    background-color: #f0f4ff;
+    color: #007bff;
+}
+
+.header_top_login .dropdown-item button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.header_top_login .dropdown-item button:hover {
+    background: none;
+    color: #007bff;
+}
+
+/* Optional: Add a subtle divider */
+.header_top_login .dropdown-menu::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 5px 0;
+}
+
+/*===========================
+     end dashbaord Header dropdown css
+===========================*/
 
 .header_top_login ul li a.main-btn {
     height: 30px;

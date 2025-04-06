@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Home')
-@section('description', 'Welcome to FuzionMobile - Empowering education through innovation.')
- 
+{{-- @section('description', 'Welcome to FuzionMobile - Empowering education through innovation.') --}}
+
 @section('content')
     <!-- Slider -->
     <section class="slider_area slider-active">

@@ -31,7 +31,8 @@ Route::post('subscribe', [SubscriberController::class, 'store'])->name('subscrib
 
 // User Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', fn() => redirect()->route('home'))->name('dashboard')->middleware(['auth', 'verified']);
+    // Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

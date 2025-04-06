@@ -10,7 +10,7 @@
                             <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                            {{-- <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -38,10 +38,10 @@
                         <div class="footer_contact mt-50">
                             <h5 class="footer_title">Contact</h5>
                             <ul class="contact">
-                                <li>Location: 27 State, New York, NY 1002, USA</li>
+                                <li>Location: Fulladu Publishers, Opposite UTG MDI Road, KMC, The Gambia</li>
                                 <li>Email: <a href="mailto:info@example.com">info@example.com</a></li>
-                                <li>Phone: <a href="tel:+1321948754">+(321)948 754</a></li>
-                                <li>Fax: +1-212-98765543</li>
+                                <li>Phone: <a href="tel:+2203285061">+(220)3285061</a></li>
+                                <li>Fax: +220-2530620</li>
                                 <li><a href="#">View Location on Google Map</a></li>
                             </ul>
                         </div>

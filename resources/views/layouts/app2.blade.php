@@ -24,11 +24,10 @@
 </head>
 <body>
     <x-frontend.preloader />
-    <x-frontend.header />
+    <x-frontend.header2 />
     <main>
         @yield('content')
     </main>
-    <x-frontend.footer />
     <x-frontend.back-to-top />
     @vite(['resources/js/app.js'])
     <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
@@ -39,6 +38,7 @@
 
     {{-- <script src="{{ asset('frontend/assets/js/bootstrap.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script> --}}
+    
     <script src="{{ asset('frontend/assets/js/slick.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/waypoints.min.js') }}"></script>
