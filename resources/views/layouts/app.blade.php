@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="@yield('description', 'FuzionMobile - Empowering Education')">
-    <title>FuzionMobile - @yield('title', 'Home')</title>
+    <meta name="author" content="@yield('description', 'Chijindu Nwokeohuru', 'chijindu.nwokeohuru@gmail.com')">
+    <title>FuzionMobile - {{ ucwords(str_replace('.', ' ', Route::currentRouteName() ?? 'Home')) }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
     @vite([
         'resources/css/app.css',
