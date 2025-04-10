@@ -1,7 +1,5 @@
 # FuzionMobile - Educational Technology Official Platform
 
-![FuzionMobile Logo](https://via.placeholder.com/150) <!-- Replace with actual logo URL -->
-
 FuzionMobile is a cutting-edge educational technology platform built with Laravel 12, designed to empower learning through innovative software, hardware, and services. It bridges the gap between technology and education, offering scalable solutions for institutions, businesses, and lifelong learners.
 
 ## Features
@@ -39,6 +37,7 @@ FuzionMobile is a cutting-edge educational technology platform built with Larave
 ## Installation
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/Chi-G/fuzionmobile.git
    cd fuzionmobile

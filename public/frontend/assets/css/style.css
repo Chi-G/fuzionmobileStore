@@ -1,60 +1,5 @@
-/*
-    Template Name: Edustdy – Education Html Template
-    Template URI: site.com
-    Description: Edustdy – Education Html Template
-    Author: raistheme
-    Author URI: https://raistheme.com/
-    Version: 1.0
-*/
-
-/* CSS Index 
------------------------------------
-
-    01.Theme default
-    02.Header
-    03.Slider
-    04.Features
-    05.About
-    06.Counter
-    07.About 2
-    08.Program
-    09.Why Choose Us
-    10.Courses
-    11.Testimonial
-    12.Team
-    13.Event
-    14.Blog
-    15.Footer
-    16.Courses Form
-    17.About 3
-    18.Features
-    19.Courses 2
-    20.testimonial 2
-    21.About 4
-    22.EVENT 2
-    23.Pricing
-    24.Category
-    25.Register
-    26.Testimonial author
-    27.EVENT 3
-    28.About 4
-    29.Skill
-    30.Why Chooses
-    31.Testimonial
-    32.Countdown 2 
-    33.Page Banner
-    34.Blog List Page
-    35.Sidebar
-    36.Blog Details
-    37.Courses Details Banner
-    38.Courses Details
-    39.Contact
-
-*/
-
-
 /*===========================
-     01.Theme default css 
+     01.Theme default css
 ===========================*/
 
 
@@ -350,7 +295,7 @@ p {
 
 
 /*===========================
-     02.Header css 
+     02.Header css
 ===========================*/
 
 .header_area {
@@ -370,22 +315,35 @@ p {
     margin-top: 15px;
 }
 
-.header_top_info ul li {
-    display: inline-block;
+.header_top_info ul {
+    list-style: none;
+    /* Remove bullets */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Use flexbox for better control */
+    align-items: center;
+    /* Vertically center items */
 }
 
-.header_top_info ul li + li {
+.header_top_info ul li {
+    display: flex
+}
+
+.header_top_info ul li+li {
     margin-left: 30px;
 }
 
 .header_top_info ul li a {
     color: #fff;
     font-size: 14px;
+    text-decoration: none;
 }
 
 .header_top_info ul li img {
     width: 16px;
     margin-right: 8px;
+    vertical-align: middle;
 }
 
 .header_top_login {
@@ -396,7 +354,7 @@ p {
     display: inline-block;
 }
 
-.header_top_login ul li + li {
+.header_top_login ul li+li {
     margin-left: 15px;
 }
 
@@ -405,6 +363,74 @@ p {
     color: #fff;
 }
 
+/*===========================
+     start dashbaord Header dropdown css
+===========================*/
+.header_top_login .dropdown {
+    position: relative;
+}
+
+.header_top_login .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.header_top_login .dropdown-menu {
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    padding: 10px 0;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+}
+
+.header_top_login .dropdown-item {
+    color: #333;
+    font-size: 14px;
+    padding: 10px 20px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.header_top_login .dropdown-item:hover,
+.header_top_login .dropdown-item:focus {
+    background-color: #f0f4ff;
+    color: #007bff;
+}
+
+.header_top_login .dropdown-item button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.header_top_login .dropdown-item button:hover {
+    background: none;
+    color: #007bff;
+}
+
+/* Optional: Add a subtle divider */
+.header_top_login .dropdown-menu::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 5px 0;
+}
+
+/*===========================
+     end dashbaord Header dropdown css
+===========================*/
 
 .header_top_login ul li a.main-btn {
     height: 30px;
@@ -474,7 +500,9 @@ p {
     top: -7px;
 }
 
-.navbar-nav {}
+.navbar-nav {
+    display: flex !important;
+}
 
 .navbar-nav li {
     margin: 0 10px;
@@ -508,8 +536,8 @@ p {
     margin-left: 5px;
 }
 
-.navbar-nav li > a.active::before,
-.navbar-nav li:hover > a::before {
+.navbar-nav li>a.active::before,
+.navbar-nav li:hover>a::before {
     width: 100%;
 }
 
@@ -547,8 +575,8 @@ p {
     line-height: 2;
 }
 
-.navbar-nav li .sub-menu li > a.active,
-.navbar-nav li .sub-menu li:hover > a {
+.navbar-nav li .sub-menu li>a.active,
+.navbar-nav li .sub-menu li:hover>a {
     color: #fcc741;
     padding-left: 20px;
 }
@@ -557,7 +585,7 @@ p {
     display: none;
 }
 
-.navbar-nav li:hover > .sub-menu {
+.navbar-nav li:hover>.sub-menu {
     opacity: 1;
     top: 100%;
     visibility: visible;
@@ -605,7 +633,7 @@ p {
     display: inline-block;
 }
 
-.navbar_meta ul li + li {
+.navbar_meta ul li+li {
     margin-left: 15px;
 }
 
@@ -665,14 +693,14 @@ p {
     display: none;
 }
 
-.header_menu_2 .navbar-nav li > a.active,
-.header_menu_2 .navbar-nav li:hover > a{
+.header_menu_2 .navbar-nav li>a.active,
+.header_menu_2 .navbar-nav li:hover>a {
     color: #fe4646;
 }
 
-.header_menu_2 .navbar-nav li .sub-menu li > a.active,
-.header_menu_2 .navbar-nav li .sub-menu li:hover > a {
-	color: #fe4646;
+.header_menu_2 .navbar-nav li .sub-menu li>a.active,
+.header_menu_2 .navbar-nav li .sub-menu li:hover>a {
+    color: #fe4646;
 }
 
 
@@ -742,8 +770,8 @@ p {
     margin-left: 5px;
 }
 
-.main_menu li > a.active,
-.main_menu li:hover > a {
+.main_menu li>a.active,
+.main_menu li:hover>a {
     color: #fcc741;
 }
 
@@ -768,13 +796,13 @@ p {
 }
 
 .main_menu li .sub-menu li a {
-	display: block;
-	padding: 8px 15px;
-	color: #252628;
-	-webkit-transition: all 0.3s linear;
-	transition: all 0.3s linear;
-	font-size: 14px;
-	font-weight: 500;
+    display: block;
+    padding: 8px 15px;
+    color: #252628;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .main_menu li .sub-menu li a i {
@@ -782,8 +810,8 @@ p {
     line-height: 2;
 }
 
-.main_menu li .sub-menu li > a.active,
-.main_menu li .sub-menu li:hover > a {
+.main_menu li .sub-menu li>a.active,
+.main_menu li .sub-menu li:hover>a {
     color: #fcc741;
     padding-left: 20px;
 }
@@ -792,7 +820,7 @@ p {
     display: none;
 }
 
-.main_menu li:hover > .sub-menu {
+.main_menu li:hover>.sub-menu {
     opacity: 1;
     top: 100%;
     visibility: visible;
@@ -840,7 +868,7 @@ p {
     display: inline-block;
 }
 
-.header_bottom_login ul li + li {
+.header_bottom_login ul li+li {
     margin-left: 15px;
 }
 
@@ -899,6 +927,45 @@ p {
     background-color: #002639;
 }
 
+@media (min-width: 992px) {
+    .navbar.navbar-expand-lg {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar.navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        justify-content: center;
+        flex-grow: 1;
+    }
+
+    .navbar.navbar-expand-lg .navbar-nav {
+        display: flex !important;
+        visibility: visible !important;
+        margin: 0 auto;
+    }
+
+    .navbar-brand {
+        margin-right: 20px;
+    }
+
+    .navbar_meta {
+        margin-left: 20px;
+    }
+}
+
+/* Ensure toggle works on small screens */
+.navbar-collapse.show {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    opacity: 1 !important;
+}
+
+.sub-menu-bar {
+    display: block !important;
+}
 
 /*===== Headr Menu 4 =====*/
 
@@ -910,19 +977,19 @@ p {
     display: none;
 }
 
-.header_menu_3 .navbar-nav li > a.active,
-.header_menu_3 .navbar-nav li:hover > a{
+.header_menu_3 .navbar-nav li>a.active,
+.header_menu_3 .navbar-nav li:hover>a {
     color: #fcc741;
 }
 
-.header_menu_3 .navbar-nav li .sub-menu li > a.active,
-.header_menu_3 .navbar-nav li .sub-menu li:hover > a {
-	color: #fcc741;
+.header_menu_3 .navbar-nav li .sub-menu li>a.active,
+.header_menu_3 .navbar-nav li .sub-menu li:hover>a {
+    color: #fcc741;
 }
 
 
 /*===========================
-    03.Slider css 
+    03.Slider css
 ===========================*/
 
 
@@ -1126,7 +1193,7 @@ p {
     background-color: #48cfaf;
 }
 
-.slider_box_wrapper .single_column:nth-child(6n+2)  .single_box {
+.slider_box_wrapper .single_column:nth-child(6n+2) .single_box {
     background-color: #fcc741;
 }
 
@@ -1134,15 +1201,15 @@ p {
     background-color: #de322e;
 }
 
-.slider_box_wrapper .single_column:nth-child(6n+4)  .single_box {
+.slider_box_wrapper .single_column:nth-child(6n+4) .single_box {
     background-color: #3d84c8;
 }
 
-.slider_box_wrapper .single_column:nth-child(6n+5)  .single_box {
+.slider_box_wrapper .single_column:nth-child(6n+5) .single_box {
     background-color: #be20c5;
 }
 
-.slider_box_wrapper .single_column:nth-child(6n+6)  .single_box {
+.slider_box_wrapper .single_column:nth-child(6n+6) .single_box {
     background-color: #01c15b;
 }
 
@@ -1300,7 +1367,7 @@ p {
 
 
 /*===========================
-     04.Features css 
+     04.Features css
 ===========================*/
 
 
@@ -1384,7 +1451,7 @@ p {
 
 
 /*===========================
-     05.About css 
+     05.About css
 ===========================*/
 
 .about_area {
@@ -1480,7 +1547,7 @@ p {
 
 
 /*===========================
-     06.Counter css 
+     06.Counter css
 ===========================*/
 
 .counter_area {}
@@ -1543,7 +1610,7 @@ p {
 
 
 /*===========================
-     07.About 2 css 
+     07.About 2 css
 ===========================*/
 
 .about_area_2 {}
@@ -1728,7 +1795,7 @@ p {
 
 
 /*===========================
-    08.Program css 
+    08.Program css
 ===========================*/
 
 
@@ -1858,7 +1925,7 @@ p {
 
 
 /*===========================
-    09.Why Choose Us css 
+    09.Why Choose Us css
 ===========================*/
 
 
@@ -1921,7 +1988,7 @@ p {
 
 
 /*===========================
-    10.Courses css 
+    10.Courses css
 ===========================*/
 
 .courses_area {
@@ -2003,7 +2070,7 @@ p {
     display: inline-block;
 }
 
-.single_courses .courses_content .tag li + li {
+.single_courses .courses_content .tag li+li {
     margin-left: 8px;
 }
 
@@ -2070,7 +2137,7 @@ p {
     display: inline-block;
 }
 
-.single_courses .courses_content .meta ul li + li {
+.single_courses .courses_content .meta ul li+li {
     margin-left: 8px;
 }
 
@@ -2097,7 +2164,7 @@ p {
 
 
 /*===========================
-    11.Testimonial css 
+    11.Testimonial css
 ===========================*/
 
 
@@ -2199,7 +2266,7 @@ p {
 
 
 /*===========================
-    12.Team css 
+    12.Team css
 ===========================*/
 
 .team_area {}
@@ -2308,14 +2375,14 @@ p {
     background-color: #3d84c8;
 }
 
-.team_col_2 .single_team:nth-child(4n+2){
+.team_col_2 .single_team:nth-child(4n+2) {
     background-color: #de322e;
 }
 
 
 
 /*===========================
-    13.Event css 
+    13.Event css
 ===========================*/
 
 .events_area {
@@ -2479,7 +2546,7 @@ p {
 
 
 /*===========================
-    14.Blog css 
+    14.Blog css
 ===========================*/
 
 .blog_area {}
@@ -2500,7 +2567,7 @@ p {
 .single_blog:hover .blog_image img {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
-    brs
+
 }
 
 .single_blog .blog_content {
@@ -2542,11 +2609,11 @@ p {
     position: relative;
 }
 
-.single_blog .blog_content .blog_content_wrapper .blog_meta li + li {
+.single_blog .blog_content .blog_content_wrapper .blog_meta li+li {
     margin-left: 20px;
 }
 
-.single_blog .blog_content .blog_content_wrapper .blog_meta li + li::before {
+.single_blog .blog_content .blog_content_wrapper .blog_meta li+li::before {
     position: absolute;
     content: '/';
     top: 2px;
@@ -2580,7 +2647,7 @@ p {
 
 
 /*===========================
-    15.Footer css 
+    15.Footer css
 ===========================*/
 
 .footer_area {
@@ -2603,6 +2670,7 @@ p {
     color: #f2f2f2;
     margin-top: 35px;
 }
+
 .footer_widget .footer_about .footer_social {
     margin-top: 30px;
 }
@@ -2611,7 +2679,7 @@ p {
     display: inline-block;
 }
 
-.footer_widget .footer_about .footer_social li + li {
+.footer_widget .footer_about .footer_social li+li {
     margin-left: 10px;
 }
 
@@ -2632,14 +2700,17 @@ p {
     background-color: #4e69b0;
     border-color: #4e69b0;
 }
+
 .footer_widget .footer_about .footer_social li:nth-of-type(2) a {
     background-color: #69cef3;
     border-color: #69cef3;
 }
+
 .footer_widget .footer_about .footer_social li:nth-of-type(3) a {
     background-color: #ef2274;
     border-color: #ef2274;
 }
+
 .footer_widget .footer_about .footer_social li:nth-of-type(4) a {
     background-color: #d01a2a;
     border-color: #d01a2a;
@@ -2655,50 +2726,55 @@ p {
 }
 
 
-.footer_widget_wrapper{}
+.footer_widget_wrapper {}
 
-.footer_link{
+.footer_link {
     width: 50%;
     padding: 0 40px;
 }
 
-.footer_link .link{
+.footer_link .link {
     width: 50%;
     padding-top: 10px;
 }
-.footer_link .link li{}
-.footer_link .link li a{
+
+.footer_link .link li {}
+
+.footer_link .link li a {
     font-size: 16px;
     color: #f2f2f2;
     margin-top: 15px;
     transition: all 0.3s linear;
 }
 
-.footer_link .link li a:hover{
+.footer_link .link li a:hover {
     color: #f8cb59;
 }
 
-.footer_contact{}
-.footer_contact .contact{
+.footer_contact {}
+
+.footer_contact .contact {
     padding-top: 10px;
 }
-.footer_contact .contact li{
+
+.footer_contact .contact li {
     font-size: 16px;
     color: #f2f2f2;
     margin-top: 15px;
 }
-.footer_contact .contact li a{
+
+.footer_contact .contact li a {
     color: #f2f2f2;
-     transition: all 0.3s linear;
+    transition: all 0.3s linear;
 }
 
-.footer_contact .contact li a:hover{
+.footer_contact .contact li a:hover {
     color: #f8cb59;
 }
 
 
 
-.footer_contact{
+.footer_contact {
     width: 50%;
     padding: 0 40px;
 }
@@ -2745,7 +2821,7 @@ p {
 
 
 /*===========================
-    16.Courses Form css 
+    16.Courses Form css
 ===========================*/
 
 .courses_form_area {}
@@ -2861,7 +2937,7 @@ p {
 
 
 /*===========================
-    17.About 3 css 
+    17.About 3 css
 ===========================*/
 
 .about_area_3 {}
@@ -2956,7 +3032,7 @@ p {
 
 
 /*===========================
-    18.Features css 
+    18.Features css
 ===========================*/
 
 
@@ -3001,7 +3077,7 @@ p {
 }
 
 /*===========================
-    19.Courses 2 css 
+    19.Courses 2 css
 ===========================*/
 
 .courses_area_2 {}
@@ -3081,7 +3157,7 @@ p {
 
 
 /*===========================
-   20.testimonial 2 css 
+   20.testimonial 2 css
 ===========================*/
 
 .testimonial_area_2 {
@@ -3159,7 +3235,7 @@ p {
 
 
 /*===========================
-    21.About 4 css 
+    21.About 4 css
 ===========================*/
 
 
@@ -3196,7 +3272,7 @@ p {
 
 
 /*===========================
-    22.EVENT 2 css 
+    22.EVENT 2 css
 ===========================*/
 
 .event_area_2 {}
@@ -3301,7 +3377,7 @@ p {
 
 
 /*===========================
-    23.Pricing css 
+    23.Pricing css
 ===========================*/
 
 .pricing_area {
@@ -3372,7 +3448,7 @@ p {
 
 
 /*===========================
-    24.Category css 
+    24.Category css
 ===========================*/
 
 .category_area {
@@ -3454,7 +3530,7 @@ p {
 
 
 /*===========================
-    25.Register css 
+    25.Register css
 ===========================*/
 
 .register_area {
@@ -3496,7 +3572,7 @@ p {
     margin-top: 30px;
 }
 
-.single_countdown + .single_countdown {
+.single_countdown+.single_countdown {
     margin-left: 20px;
 }
 
@@ -3607,7 +3683,7 @@ p {
 
 
 /*===========================
-    26.Testimonial author css 
+    26.Testimonial author css
 ===========================*/
 
 .single_testimonial_author {
@@ -3685,7 +3761,7 @@ p {
 
 
 /*===========================
-    27.EVENT 3 css 
+    27.EVENT 3 css
 ===========================*/
 
 .event_area_3 {
@@ -3809,7 +3885,7 @@ p {
 
 
 /*===========================
-    28.About 4 css 
+    28.About 4 css
 ===========================*/
 
 .about_area_4 {}
@@ -3846,7 +3922,7 @@ p {
     margin-top: -10px;
 }
 
-.single_items + .single_items {
+.single_items+.single_items {
     margin-left: 30px;
 }
 
@@ -3886,7 +3962,7 @@ p {
     padding: 0 40px;
 }
 
-.single_about_info + .single_about_info {
+.single_about_info+.single_about_info {
     border-left: 1px solid #ebebeb;
 }
 
@@ -3904,7 +3980,7 @@ p {
 
 
 /*===========================
-    29.Skill css 
+    29.Skill css
 ===========================*/
 
 .skill_area {
@@ -4031,7 +4107,7 @@ p {
 
 
 /*===========================
-    30.Why Chooses css 
+    30.Why Chooses css
 ===========================*/
 
 .why_choose_area_2 {
@@ -4133,7 +4209,7 @@ p {
 
 
 /*===========================
-    31.Testimonial css 
+    31.Testimonial css
 ===========================*/
 
 .testimonial_area_3 {}
@@ -4239,7 +4315,7 @@ p {
 
 
 /*===========================
-    32.Countdown 2 css 
+    32.Countdown 2 css
 ===========================*/
 
 .countdown_wrapper_2 {
@@ -4283,7 +4359,7 @@ p {
 
 
 /*===========================
-    33.Page Banner css 
+    33.Page Banner css
 ===========================*/
 
 
@@ -4326,11 +4402,11 @@ p {
     position: relative;
 }
 
-.banner_content .breadcrumb li + li {
+.banner_content .breadcrumb li+li {
     margin-left: 20px;
 }
 
-.banner_content .breadcrumb li + li::before {
+.banner_content .breadcrumb li+li::before {
     position: absolute;
     content: '/';
     top: 2px;
@@ -4351,7 +4427,7 @@ p {
 
 
 /*===========================
-    34.Blog List Page css 
+    34.Blog List Page css
 ===========================*/
 
 
@@ -4412,11 +4488,11 @@ p {
     position: relative;
 }
 
-.single_blog_list .blog_list_content .blog_content_wrapper .blog_meta li + li {
+.single_blog_list .blog_list_content .blog_content_wrapper .blog_meta li+li {
     margin-left: 20px;
 }
 
-.single_blog_list .blog_list_content .blog_content_wrapper .blog_meta li + li::before {
+.single_blog_list .blog_list_content .blog_content_wrapper .blog_meta li+li::before {
     position: absolute;
     content: '/';
     top: 2px;
@@ -4452,7 +4528,7 @@ p {
 
 
 /*===========================
-    35.Sidebar css 
+    35.Sidebar css
 ===========================*/
 
 .sidebar {}
@@ -4584,7 +4660,7 @@ p {
 
 
 /*===========================
-    36.Blog Details css 
+    36.Blog Details css
 ===========================*/
 
 .blog_details_page {}
@@ -4635,11 +4711,11 @@ p {
     position: relative;
 }
 
-.blog_details .details_content .blog_content_wrapper .blog_meta li + li {
+.blog_details .details_content .blog_content_wrapper .blog_meta li+li {
     margin-left: 20px;
 }
 
-.blog_details .details_content .blog_content_wrapper .blog_meta li + li::before {
+.blog_details .details_content .blog_content_wrapper .blog_meta li+li::before {
     position: absolute;
     content: '/';
     top: 2px;
@@ -4784,7 +4860,7 @@ p {
     color: #fcc741;
 }
 
-.blog_details_comment .blog_comment_items ul li .single_comment .comment_content .commtent_meta li + li {
+.blog_details_comment .blog_comment_items ul li .single_comment .comment_content .commtent_meta li+li {
     margin-left: 20px;
     margin-top: 10px;
 }
@@ -4795,7 +4871,7 @@ p {
 
 
 /*===========================
-  37.Courses Details Banner css 
+  37.Courses Details Banner css
 ===========================*/
 
 .courses_details_banner {
@@ -4880,7 +4956,7 @@ p {
 
 
 /*===========================
-   38.Courses Details css 
+   38.Courses Details css
 ===========================*/
 
 .courses_details_area {}
@@ -4933,7 +5009,7 @@ p {
     display: inline-block;
 }
 
-.courses_top_bar .courses_meta .meta li + li {
+.courses_top_bar .courses_meta .meta li+li {
     margin-left: 15px;
 }
 
@@ -5092,7 +5168,7 @@ p {
     display: inline-block;
 }
 
-.single_teachers .author_content .social li + li {
+.single_teachers .author_content .social li+li {
     margin-left: 8px;
 }
 
@@ -5212,7 +5288,7 @@ p {
     font-size: 16px;
 }
 
-.courses_reviews_comment .comment_content .star li + li {
+.courses_reviews_comment .comment_content .star li+li {
     margin-left: 5px;
 }
 
@@ -5380,7 +5456,7 @@ p {
 
 
 /*===========================
-    39.Contact css 
+    39.Contact css
 ===========================*/
 
 .contact_area {}
@@ -5404,19 +5480,3 @@ p {
     width: 100%;
     height: 290px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -14,11 +14,12 @@ use App\Http\Controllers\{
     ProductController,
     PostController,
     SubscriberController,
-    ProfileController
+    ProfileController,
+    HomeController
 };
 
 // Public Routes
-Route::get('/', fn() => view('home'))->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::resource('services', ServiceController::class);
 Route::resource('events', EventController::class);
@@ -30,7 +31,8 @@ Route::post('subscribe', [SubscriberController::class, 'store'])->name('subscrib
 
 // User Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', fn() => redirect()->route('home'))->name('dashboard')->middleware(['auth', 'verified']);
+    // Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
