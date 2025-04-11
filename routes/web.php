@@ -59,11 +59,5 @@ Route::post('/admin/forgot-password', [APasswordResetLinkController::class, 'sto
 Route::get('/admin/reset-password/{token}', [ANewPasswordController::class, 'create'])->name('admin.password.reset');
 Route::post('/admin/reset-password', [ANewPasswordController::class, 'store'])->name('admin.password.store');
 
-Route::get('/admin/debug', fn() => dd(
-    Auth::guard('admin')->check(),
-    Auth::guard('admin')->user(),
-    session()->all()
-))->middleware('auth:admin');
-
 // Breeze Auth Routes
 require __DIR__.'/auth.php';
