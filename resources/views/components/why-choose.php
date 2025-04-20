@@ -1,20 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-    <!-- Page Banner -->
-    <x-about.banner />
-
-    <!-- About Section -->
-    <x-about.main :companyInfo="$companyInfo" />
-
-    <!-- Counter Section -->
-    <x-about.counter :companyInfo="$companyInfo" />
-
-    <!-- About 2 Section (Video and Features) -->
-    <x-about.features :companyInfo="$companyInfo" />
-
-    <!-- Why Choose Us Section -->
-    <section class="why_choose_area pt-120 pb-130">
+<!-- Why Choose Us -->
+<section class="why_choose_area pt-120 pb-130">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -79,11 +64,3 @@
             </div>
         </div>
     </section>
-    {{-- <x-about.why-choose :companyInfo="$companyInfo" /> --}}
-
-    <!-- Testimonial Section -->
-    <x-about.testimonials />
-
-    <!-- Team Section -->
-    <x-team :teamMembers="$teamMembers" /> 
-@endsection

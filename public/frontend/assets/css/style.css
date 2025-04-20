@@ -5515,3 +5515,25 @@ p {
 .toast-error {
     background-color: #ef4444 !important;
 }
+
+/*===========================
+    41.Services hover css
+===========================*/
+.single_courses {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.single_courses:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    background-color: #f8f9fa;
+}
+
+/* Ensure title and meta text remain consistent on hover */
+.single_courses:hover .title,
+.single_courses:hover .meta span,
+.single_courses:hover .author_name span,
+.single_courses:hover .tag span {
+    color: inherit;
+}

@@ -24,14 +24,31 @@ use App\Http\Controllers\{
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/about', [CompanyInfoController::class, 'index'])->name('about');
+
 Route::get('/team', [TeamMemberController::class, 'index'])->name('team');
+
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
+Route::get('/services/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');
+Route::post('/services', [App\Http\Controllers\ServiceController::class, 'store'])->name('services.store');
+
+Route::post('/cart/add/{service}', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+
 Route::get('/events', [EventController::class, 'index'])->name('events');
+
 Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars');
+
 Route::get('/marketing', [MarketingStrategyController::class, 'index'])->name('marketing');
+
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 Route::post('subscribe', [SubscriberController::class, 'store'])->name('subscribe');
 
 // User Authenticated Routes

@@ -31,7 +31,7 @@
                                     <li><a href="{{ route('posts') }}">Latest News</a></li>
                                     <li><a href="#">Privacy Policy</a></li>
                                     <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="{{ route('contact') }}">Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                             <h5 class="footer_title">Contact</h5>
                             <ul class="contact">
                                 <li>Location: Fulladu Publishers, Opposite UTG MDI Road, KMC, The Gambia</li>
-                                <li>Email: <a href="mailto:info@example.com">info@example.com</a></li>
+                                <li>Email: <a href="mailto:info@e-learning.gm">info@e-learning.gm</a></li>
                                 <li>Phone: <a href="tel:+2203285061">+(220)3285061</a></li>
                                 <li>Fax: +220-2530620</li>
                                 <li><a href="#">View Location on Google Map</a></li>

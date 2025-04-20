@@ -4,14 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class PostController extends Controller {
-    public function index() {
-        $posts = Post::latest()->get();
-        return view('posts.index', compact('posts'));
+class PostController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = Post::query();
+
+        // Search by title or content
+        if ($search = $request->query('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by month/year
+        if ($month = $request->query('month') && $year = $request->query('year')) {
+            $query->whereMonth('created_at', $month)->whereYear('created_at', $year);
+        }
+
+        // Filter by tag
+        if ($tag = $request->query('tag')) {
+            $query->whereJsonContains('tags', $tag);
+        }
+
+        $posts = $query->latest()->paginate(6);
+        $popularPosts = Post::latest()->take(3)->get();
+        $archives = Post::selectRaw("strftime('%Y', created_at) as year, strftime('%m', created_at) as month, COUNT(*) as count")
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get()
+            ->toArray();
+        $tags = Post::whereNotNull('tags')->pluck('tags')->flatten()->unique()->values()->toArray();
+
+        return view('posts.index', compact('posts', 'popularPosts', 'archives', 'tags'));
     }
 
-    public function store(Request $request) {
+    public function show(Post $post)
+    {
+        return view('posts.details', compact('post'));
+    }
+
+    public function store(Request $request)
+    {
         $data = $request->validate([
             'title' => 'required',
             'content' => 'required',
@@ -30,6 +68,6 @@ class PostController extends Controller {
         }
 
         Post::create($data);
-        return redirect()->route('posts');
+        return redirect()->route('posts.index');
     }
 }

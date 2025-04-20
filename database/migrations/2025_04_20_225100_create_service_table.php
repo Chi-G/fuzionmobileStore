@@ -15,8 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('category');
+            $table->string('category')->nullable();
             $table->string('image_path')->nullable();
+            $table->json('tags')->nullable();
+            $table->string('author_name')->nullable();
+            $table->string('author_image')->nullable();
+            $table->integer('enrollment_count')->default(0);
+            $table->float('rating')->default(0);
+            $table->decimal('price', 8, 2)->default(0);
             $table->timestamps();
         });
     }

@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class CompanyInfoController extends Controller {
     public function index() {
-        $info = CompanyInfo::first();
-        return view('about.index', compact('info'));
+        $companyInfo = CompanyInfo::first() ?? new CompanyInfo();
+        $teamMembers = \App\Models\TeamMember::all();
+        return view('about.index', compact('companyInfo', 'teamMembers'));
     }
 
     public function create() {
