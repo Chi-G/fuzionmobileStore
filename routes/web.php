@@ -24,12 +24,14 @@ use App\Http\Controllers\{
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::resource('services', ServiceController::class);
-Route::resource('events', EventController::class);
-Route::resource('webinars', WebinarController::class);
-Route::resource('marketing', MarketingStrategyController::class);
-Route::resource('products', ProductController::class);
-Route::resource('posts', PostController::class);
+Route::get('/about', [CompanyInfoController::class, 'index'])->name('about');
+Route::get('/team', [TeamMemberController::class, 'index'])->name('team');
+Route::get('/services', [ServiceController::class, 'index'])->name('services');
+Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars');
+Route::get('/marketing', [MarketingStrategyController::class, 'index'])->name('marketing');
+Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::post('subscribe', [SubscriberController::class, 'store'])->name('subscribe');
 
 // User Authenticated Routes
@@ -42,18 +44,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Admin Authenticated Routes
 Route::middleware('auth:admin')->group(function () {
-    // Route::get('/admin/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
-    Route::resource('admin/about', CompanyInfoController::class);
-    Route::resource('admin/team', TeamMemberController::class);
     Route::get('/admin/profile', [AProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::patch('/admin/profile', [AProfileController::class, 'update'])->name('admin.profile.update');
     Route::delete('/admin/profile', [AProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 
 // Admin Authentication Routes
-// Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');
-// Route::post('/admin/login', [AdminLoginController::class, 'store'])->name('admin.login');
-// Route::post('/admin/logout', [AdminLoginController::class, 'destroy'])->name('admin.logout');
 Route::get('/admin/forgot-password', [APasswordResetLinkController::class, 'create'])->name('admin.password.request');
 Route::post('/admin/forgot-password', [APasswordResetLinkController::class, 'store'])->name('admin.password.email');
 Route::get('/admin/reset-password/{token}', [ANewPasswordController::class, 'create'])->name('admin.password.reset');

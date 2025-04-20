@@ -51,12 +51,12 @@
                 <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                     <ul class="navbar-nav m-auto">
                         <li><a class="{{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
-                        <li><a class="{{ request()->routeIs('about.index') ? 'active' : '' }}" href="{{ route('about.index') }}">About</a></li>
-                        <li><a class="{{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">Services</a></li>
-                        <li><a class="{{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('events.index') }}">Events</a></li>
-                        <li><a class="{{ request()->routeIs('webinars.index') ? 'active' : '' }}" href="{{ route('webinars.index') }}">Webinars</a></li>
-                        <li><a class="{{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}">Store</a></li>
-                        <li><a class="{{ request()->routeIs('posts.index') ? 'active' : '' }}" href="{{ route('posts.index') }}">Blog</a></li>
+                        <li><a class="{{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a></li>
+                        <li><a class="{{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}">Services</a></li>
+                        <li><a class="{{ request()->routeIs('events') ? 'active' : '' }}" href="{{ route('events') }}">Events</a></li>
+                        <li><a class="{{ request()->routeIs('webinars') ? 'active' : '' }}" href="{{ route('webinars') }}">Webinars</a></li>
+                        <li><a class="{{ request()->routeIs('products') ? 'active' : '' }}" href="{{ route('products') }}">Store</a></li>
+                        <li><a class="{{ request()->routeIs('posts') ? 'active' : '' }}" href="{{ route('posts') }}">Blog</a></li>
                     </ul>
                 </div>
                 <div class="navbar_meta">
@@ -68,7 +68,7 @@
                                 <button><i class="fa fa-search"></i></button>
                             </div>
                         </li>
-                        <li><a href="{{ route('products.index') }}"><img src="{{ asset('frontend/assets/images/cart.png') }}" alt="cart"> <span>{{ $cartCount ?? 0 }}</span></a></li>
+                        <li><a href="{{ route('products') }}"><img src="{{ asset('frontend/assets/images/cart.png') }}" alt="cart"> <span>{{ $cartCount ?? 0 }}</span></a></li>
                     </ul>
                 </div>
             </nav>

@@ -11,7 +11,7 @@ class MarketingStrategyController extends Controller {
         return view('marketing.index', compact('strategies'));
     }
 
-    public function store(Request $request) { 
+    public function store(Request $request) {
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -23,6 +23,6 @@ class MarketingStrategyController extends Controller {
         }
 
         MarketingStrategy::create($data);
-        return redirect()->route('marketing.index');
+        return redirect()->route('marketing');
     }
 }

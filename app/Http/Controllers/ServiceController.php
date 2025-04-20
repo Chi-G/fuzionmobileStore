@@ -24,6 +24,6 @@ class ServiceController extends Controller {
         }
 
         Service::create($data);
-        return redirect()->route('services.index');
+        return redirect()->route('services');
     }
 }

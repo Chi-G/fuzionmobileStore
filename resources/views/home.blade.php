@@ -14,7 +14,7 @@
                             <h4 class="sub_title" data-animation="fadeInUp" data-delay="0.2s">Your Mobile Innovation Hub</h4>
                             <h2 class="main_title" data-animation="fadeInUp" data-delay="0.5s">Discover <span>FuzionMobile</span></h2>
                             <p data-animation="fadeInUp" data-delay="0.8s">Unleash your potential with premium mobile products, expert-led webinars, <br> and transformative services—all in one dynamic platform.</p>
-                            <a class="main-btn" href="{{ route('products.index') }}" data-animation="fadeInUp" data-delay="1.1s">Shop Now</a>
+                            <a class="main-btn" href="{{ route('products') }}" data-animation="fadeInUp" data-delay="1.1s">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                             <h4 class="sub_title" data-animation="fadeInUp" data-delay="0.2s">Connect and Grow</h4>
                             <h2 class="main_title" data-animation="fadeInUp" data-delay="0.5s">Events & <span>Webinars</span></h2>
                             <p data-animation="fadeInUp" data-delay="0.8s">Join our vibrant community through exclusive events and webinars designed <br> to inspire innovation and skill-building.</p>
-                            <a class="main-btn" href="{{ route('webinars.index') }}" data-animation="fadeInUp" data-delay="1.1s">Register Today</a>
+                            <a class="main-btn" href="{{ route('webinars') }}" data-animation="fadeInUp" data-delay="1.1s">Register Today</a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                                 <img src="{{ asset('frontend/assets/images/f-icon-1.png') }}" alt="Icon">
                             </div>
                             <div class="features_content">
-                                <h4 class="features_title"><a href="{{ route('products.index') }}">Mobile Store</a></h4>
+                                <h4 class="features_title"><a href="{{ route('products') }}">Mobile Store</a></h4>
                                 <p>Browse our premium selection of SD cards, devices, and licenses, curated to power your mobile needs.</p>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                 <img src="{{ asset('frontend/assets/images/f-icon-2.png') }}" alt="Icon">
                             </div>
                             <div class="features_content">
-                                <h4 class="features_title"><a href="{{ route('services.index') }}">Expert Services</a></h4>
+                                <h4 class="features_title"><a href="{{ route('services') }}">Expert Services</a></h4>
                                 <p>Unlock tailored solutions—from corporate training to content development—designed for success.</p>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <img src="{{ asset('frontend/assets/images/f-icon-3.png') }}" alt="Icon">
                             </div>
                             <div class="features_content">
-                                <h4 class="features_title"><a href="{{ route('events.index') }}">Engaging Events</a></h4>
+                                <h4 class="features_title"><a href="{{ route('events') }}">Engaging Events</a></h4>
                                 <p>Participate in virtual or in-person events that connect you with industry leaders and innovators.</p>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                         <h3 class="about_title">Empowering Your Mobile World</h3>
                         <p class="text">FuzionMobile is your gateway to innovative mobile solutions, blending premium products with expert-driven resources.</p>
                         <p>Our vision is to redefine how you engage with technology—through seamless shopping, impactful events, and cutting-edge services.</p>
-                        <a href="{{ route('about.index') }}" class="main-btn">Learn About Us</a>
+                        <a href="{{ route('about') }}" class="main-btn">Learn About Us</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -177,9 +177,9 @@
             <div class="single_about_2 d-flex flex-wrap">
                 <div class="about_2_content">
                     <div class="about_2_content_wrapper">
-                        <h4 class="title"><a href="{{ route('products.index') }}">Unmatched Mobile Value</a></h4>
+                        <h4 class="title"><a href="{{ route('products') }}">Unmatched Mobile Value</a></h4>
                         <p>Shop with confidence—our premium SD cards, devices, and licenses deliver top performance and reliability.</p>
-                        <a href="{{ route('products.index') }}" class="main-btn">Explore Store</a>
+                        <a href="{{ route('products') }}" class="main-btn">Explore Store</a>
                     </div>
                 </div>
                 <div class="about_2_image bg_cover" style="background-image: url({{ asset('frontend/assets/images/about-4.jpg') }})"></div>
@@ -187,9 +187,9 @@
             <div class="single_about_2 d-flex flex-wrap">
                 <div class="about_2_content order-md-last">
                     <div class="about_2_content_wrapper">
-                        <h4 class="title"><a href="{{ route('events.index') }}">Thriving Mobile Community</a></h4>
+                        <h4 class="title"><a href="{{ route('events') }}">Thriving Mobile Community</a></h4>
                         <p>Connect with innovators through exclusive events and webinars that inspire and elevate your mobile expertise.</p>
-                        <a href="{{ route('events.index') }}" class="main-btn">Join Us</a>
+                        <a href="{{ route('events') }}" class="main-btn">Join Us</a>
                     </div>
                 </div>
                 <div class="about_2_image bg_cover order-md-first" style="background-image: url({{ asset('frontend/assets/images/about-5.jpg') }})"></div>
@@ -218,7 +218,7 @@
                         </div>
                         <div class="program_content">
                             <div class="content_wrapper">
-                                <h5 class="title"><a href="{{ route('products.index') }}">Mobile <br> Devices</a></h5>
+                                <h5 class="title"><a href="{{ route('products') }}">Mobile <br> Devices</a></h5>
                             </div>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                         </div>
                         <div class="program_content">
                             <div class="content_wrapper">
-                                <h5 class="title"><a href="{{ route('products.index') }}">SD Card <br> Solutions</a></h5>
+                                <h5 class="title"><a href="{{ route('products') }}">SD Card <br> Solutions</a></h5>
                             </div>
                         </div>
                     </div>
@@ -246,7 +246,7 @@
                         </div>
                         <div class="program_content">
                             <div class="content_wrapper">
-                                <h5 class="title"><a href="{{ route('services.index') }}">Corporate <br> Training</a></h5>
+                                <h5 class="title"><a href="{{ route('services') }}">Corporate <br> Training</a></h5>
                             </div>
                         </div>
                     </div>
@@ -260,7 +260,7 @@
                         </div>
                         <div class="program_content">
                             <div class="content_wrapper">
-                                <h5 class="title"><a href="{{ route('services.index') }}">Content <br> Development</a></h5>
+                                <h5 class="title"><a href="{{ route('services') }}">Content <br> Development</a></h5>
                             </div>
                         </div>
                     </div>
@@ -274,7 +274,7 @@
                         </div>
                         <div class="program_content">
                             <div class="content_wrapper">
-                                <h5 class="title"><a href="{{ route('webinars.index') }}">Expert <br> Webinars</a></h5>
+                                <h5 class="title"><a href="{{ route('webinars') }}">Expert <br> Webinars</a></h5>
                             </div>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
                         </div>
                         <div class="program_content">
                             <div class="content_wrapper">
-                                <h5 class="title"><a href="{{ route('events.index') }}">Community <br> Events</a></h5>
+                                <h5 class="title"><a href="{{ route('events') }}">Community <br> Events</a></h5>
                             </div>
                         </div>
                     </div>
@@ -314,7 +314,7 @@
                                         <img src="{{ asset('frontend/assets/images/choose_icon-1.png') }}" alt="Icon">
                                     </div>
                                     <div class="choose_content">
-                                        <h5 class="title"><a href="{{ route('products.index') }}">Premium Quality</a></h5>
+                                        <h5 class="title"><a href="{{ route('products') }}">Premium Quality</a></h5>
                                         <p>Shop top-tier mobile products backed by reliability and performance guarantees.</p>
                                     </div>
                                 </div>
@@ -325,7 +325,7 @@
                                         <img src="{{ asset('frontend/assets/images/choose_icon-2.png') }}" alt="Icon">
                                     </div>
                                     <div class="choose_content">
-                                        <h5 class="title"><a href="{{ route('services.index') }}">Expert Support</a></h5>
+                                        <h5 class="title"><a href="{{ route('services') }}">Expert Support</a></h5>
                                         <p>Access tailored training and content development from industry professionals.</p>
                                     </div>
                                 </div>
@@ -336,7 +336,7 @@
                                         <img src="{{ asset('frontend/assets/images/choose_icon-3.png') }}" alt="Icon">
                                     </div>
                                     <div class="choose_content">
-                                        <h5 class="title"><a href="{{ route('events.index') }}">Community Focus</a></h5>
+                                        <h5 class="title"><a href="{{ route('events') }}">Community Focus</a></h5>
                                         <p>Join events that connect you with innovators and thought leaders.</p>
                                     </div>
                                 </div>
@@ -347,7 +347,7 @@
                                         <img src="{{ asset('frontend/assets/images/choose_icon-4.png') }}" alt="Icon">
                                     </div>
                                     <div class="choose_content">
-                                        <h5 class="title"><a href="{{ route('webinars.index') }}">Learning Hub</a></h5>
+                                        <h5 class="title"><a href="{{ route('webinars') }}">Learning Hub</a></h5>
                                         <p>Gain insights through webinars designed to elevate your mobile expertise.</p>
                                     </div>
                                 </div>
@@ -399,7 +399,7 @@
                                     <a href="#">James Carter</a>
                                 </div>
                             </div>
-                            <h4 class="title"><a href="{{ route('webinars.index') }}">Mastering Mobile Storage Solutions</a></h4>
+                            <h4 class="title"><a href="{{ route('webinars') }}">Mastering Mobile Storage Solutions</a></h4>
                             <div class="meta d-flex justify-content-between">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-user-o"></i> 150</a></li>
@@ -427,7 +427,7 @@
                                     <a href="#">Sarah Brooks</a>
                                 </div>
                             </div>
-                            <h4 class="title"><a href="{{ route('webinars.index') }}">Mobile Strategies for Enterprises</a></h4>
+                            <h4 class="title"><a href="{{ route('webinars') }}">Mobile Strategies for Enterprises</a></h4>
                             <div class="meta d-flex justify-content-between">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-user-o"></i> 200</a></li>
@@ -456,7 +456,7 @@
                                     <a href="#">Liam Hayes</a>
                                 </div>
                             </div>
-                            <h4 class="title"><a href="{{ route('webinars.index') }}">Creating Mobile Content That Converts</a></h4>
+                            <h4 class="title"><a href="{{ route('webinars') }}">Creating Mobile Content That Converts</a></h4>
                             <div class="meta d-flex justify-content-between">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-user-o"></i> 120</a></li>
@@ -484,7 +484,7 @@
                                     <a href="#">Emma Stone</a>
                                 </div>
                             </div>
-                            <h4 class="title"><a href="{{ route('webinars.index') }}">Future of Mobile Innovation</a></h4>
+                            <h4 class="title"><a href="{{ route('webinars') }}">Future of Mobile Innovation</a></h4>
                             <div class="meta d-flex justify-content-between">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-user-o"></i> 180</a></li>
@@ -634,7 +634,7 @@
                             <li><a class="color-1" href="#"><i class="fa fa-calendar"></i> 15 May, 2025</a></li>
                             <li><a class="color-2" href="#"><i class="fa fa-video-camera"></i> Virtual (Zoom)</a></li>
                         </ul>
-                        <h4 class="events_title"><a href="{{ route('events.index') }}">Mobile Tech Summit <br> 2025</a></h4>
+                        <h4 class="events_title"><a href="{{ route('events') }}">Mobile Tech Summit <br> 2025</a></h4>
                     </div>
                 </div>
                 <div class="events_content_title">
@@ -650,7 +650,7 @@
                             <li><a class="color-1" href="#"><i class="fa fa-calendar"></i> 20 June, 2025</a></li>
                             <li><a class="color-2" href="#"><i class="fa fa-map-marker"></i> The Gambia, GA</a></li>
                         </ul>
-                        <h4 class="events_title"><a href="{{ route('events.index') }}">FuzionMobile <br> Innovation Day</a></h4>
+                        <h4 class="events_title"><a href="{{ route('events') }}">FuzionMobile <br> Innovation Day</a></h4>
                     </div>
                 </div>
             </div>
@@ -662,7 +662,7 @@
                         <li><a class="color-1" href="#"><i class="fa fa-calendar"></i> 10 July, 2025</a></li>
                         <li><a class="color-2" href="#"><i class="fa fa-video-camera"></i> Virtual (Google Meet)</a></li>
                     </ul>
-                    <h4 class="events_title"><a href="{{ route('events.index') }}">SD Card Solutions <br> Workshop</a></h4>
+                    <h4 class="events_title"><a href="{{ route('events') }}">SD Card Solutions <br> Workshop</a></h4>
                 </div>
             </div>
         </div>
@@ -692,7 +692,7 @@
                                     <li><a href="#">Kelly Mason</a></li>
                                     <li><a href="#">06 Apr 2025</a></li>
                                 </ul>
-                                <h4 class="blog_title"><a href="{{ route('posts.index') }}">Top 5 Mobile Storage Tips</a></h4>
+                                <h4 class="blog_title"><a href="{{ route('posts') }}">Top 5 Mobile Storage Tips</a></h4>
                             </div>
                         </div>
                     </div>
@@ -709,7 +709,7 @@
                                     <li><a href="#">Tom Nguyen</a></li>
                                     <li><a href="#">10 Apr 2025</a></li>
                                 </ul>
-                                <h4 class="blog_title"><a href="{{ route('posts.index') }}">Why Events Matter in Tech</a></h4>
+                                <h4 class="blog_title"><a href="{{ route('posts') }}">Why Events Matter in Tech</a></h4>
                             </div>
                         </div>
                     </div>
@@ -726,7 +726,7 @@
                                     <li><a href="#">Nina Patel</a></li>
                                     <li><a href="#">15 Apr 2025</a></li>
                                 </ul>
-                                <h4 class="blog_title"><a href="{{ route('posts.index') }}">Maximizing SD Card Performance</a></h4>
+                                <h4 class="blog_title"><a href="{{ route('posts') }}">Maximizing SD Card Performance</a></h4>
                             </div>
                         </div>
                     </div>

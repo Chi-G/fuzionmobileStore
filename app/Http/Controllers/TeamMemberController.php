@@ -30,7 +30,7 @@ class TeamMemberController extends Controller {
         }
 
         TeamMember::create($data);
-        return redirect()->route('team.index');
+        return redirect()->route('team');
     }
 
     public function edit(TeamMember $teamMember) {
@@ -52,11 +52,11 @@ class TeamMemberController extends Controller {
         }
 
         $teamMember->update($data);
-        return redirect()->route('team.index');
+        return redirect()->route('team');
     }
 
     public function destroy(TeamMember $teamMember) {
         $teamMember->delete();
-        return redirect()->route('team.index');
+        return redirect()->route('team');
     }
 }

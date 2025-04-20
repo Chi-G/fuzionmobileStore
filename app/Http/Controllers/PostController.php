@@ -30,6 +30,6 @@ class PostController extends Controller {
         }
 
         Post::create($data);
-        return redirect()->route('posts.index');
+        return redirect()->route('posts');
     }
 }

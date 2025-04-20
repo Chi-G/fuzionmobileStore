@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 
 class SubscriberController extends Controller {
     public function store(Request $request) {
-        $data = $request->validate(['email' => 'required|email|unique:subscribers,email']);
+        $data = $request->validate([
+            'email' => 'required|email|unique:subscribers,email',
+        ]);
+
         Subscriber::create($data);
-        return redirect()->back()->with('success', 'Subscribed successfully!');
+
+        return redirect()->back()->with('success', 'Thank you for subscribing!');
     }
 }

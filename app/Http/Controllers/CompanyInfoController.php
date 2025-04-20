@@ -12,7 +12,7 @@ class CompanyInfoController extends Controller {
     }
 
     public function create() {
-        return view('about.create'); 
+        return view('about.create');
     }
 
     public function store(Request $request) {
@@ -29,7 +29,7 @@ class CompanyInfoController extends Controller {
         }
 
         CompanyInfo::create($data);
-        return redirect()->route('about.index');
+        return redirect()->route('about');
     }
 
     public function edit(CompanyInfo $companyInfo) {
@@ -50,7 +50,7 @@ class CompanyInfoController extends Controller {
         }
 
         $companyInfo->update($data);
-        return redirect()->route('about.index');
+        return redirect()->route('about');
     }
 
     // Destroy method omitted as there’s typically one CompanyInfo record

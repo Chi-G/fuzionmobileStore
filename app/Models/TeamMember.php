@@ -12,3 +12,4 @@ class TeamMember extends Model {
 
     protected $casts = ['social_links' => 'array'];
 }
+ 

@@ -26,6 +26,6 @@ class ProductController extends Controller {
         }
 
         Product::create($data);
-        return redirect()->route('products.index');
+        return redirect()->route('products');
     }
 }

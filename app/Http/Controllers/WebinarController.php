@@ -28,7 +28,7 @@ class WebinarController extends Controller {
             $this->createZoomMeeting($webinar);
         }
 
-        return redirect()->route('webinars.index');
+        return redirect()->route('webinars');
     }
 
     protected function createZoomMeeting($webinar) {

@@ -21,14 +21,14 @@
                             <div class="footer_link_wrapper d-flex">
                                 <ul class="link">
                                     <li><a href="{{ route('home') }}">Home</a></li>
-                                    <li><a href="{{ route('about.index') }}">About Us</a></li>
-                                    <li><a href="{{ route('services.index') }}">Services</a></li>
-                                    <li><a href="{{ route('events.index') }}">Events</a></li>
-                                    <li><a href="{{ route('products.index') }}">Store</a></li>
+                                    <li><a href="{{ route('about') }}">About Us</a></li>
+                                    <li><a href="{{ route('services') }}">Services</a></li>
+                                    <li><a href="{{ route('events') }}">Events</a></li>
+                                    <li><a href="{{ route('products') }}">Store</a></li>
                                 </ul>
                                 <ul class="link">
-                                    <li><a href="{{ route('team.index') }}">Our Team</a></li>
-                                    <li><a href="{{ route('posts.index') }}">Latest News</a></li>
+                                    <li><a href="{{ route('team') }}">Our Team</a></li>
+                                    <li><a href="{{ route('posts') }}">Latest News</a></li>
                                     <li><a href="#">Privacy Policy</a></li>
                                     <li><a href="#">Terms & Conditions</a></li>
                                     <li><a href="#">Contact Us</a></li>
@@ -45,6 +45,15 @@
                                 <li><a href="#">View Location on Google Map</a></li>
                             </ul>
                         </div>
+                    </div>
+                    <!-- Subscription Form -->
+                    <div class="footer_subscribe mt-50 text-center">
+                        <h5 class="footer_title">Stay Updated</h5>
+                        <form action="{{ route('subscribe') }}" method="POST" class="d-flex justify-content-center">
+                            @csrf
+                            <input type="email" name="email" placeholder="Enter your email" class="form-control px-4 py-2 rounded-l-md border-0 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500" required>
+                            <button type_subs="submit" class="btn btn-primary px-4 py-2 rounded-r-md">Subscribe</button>
+                        </form>
                     </div>
                 </div>
             </div>

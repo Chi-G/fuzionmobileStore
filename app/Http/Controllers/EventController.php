@@ -31,6 +31,6 @@ class EventController extends Controller {
         }
 
         Event::create($data);
-        return redirect()->route('events.index');
+        return redirect()->route('events');
     }
 }
