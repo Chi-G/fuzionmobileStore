@@ -36,6 +36,8 @@ Route::post('/services', [App\Http\Controllers\ServiceController::class, 'store'
 Route::post('/cart/add/{service}', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 
 Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::get('/events/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('events.show');
+Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->name('events.store');
 
 Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars');
 

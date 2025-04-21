@@ -559,7 +559,7 @@
                                     <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                     <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul> 
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -607,7 +607,7 @@
                             <img src="{{ asset('frontend/assets/images/team-4.jpg') }}" alt="team">
                         </div>
                         <div class="team_content">
-                            <div class="team_content_wrapper">
+                            <div class="team_content_wrapper"> 
                                 <h4 class="title"><a href="#">Sophie Kim</a></h4>
                                 <span>Content Developer</span>
                                 <ul class="social">

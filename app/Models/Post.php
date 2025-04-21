@@ -9,8 +9,12 @@ class Post extends Model
 {
     use HasFactory;
     protected $table = 'posts';
-    
+
     protected $guarded = [];
+
+    protected $casts = [
+        'tags' => 'array',
+    ];
 
     public function comments() {
         return $this->hasMany(Comment::class);

@@ -6,7 +6,7 @@
                     @foreach($posts as $post)
                         <div class="single_blog_list mt-50">
                             <div class="blog_list_image">
-                                <img src="{{ $post->image_path ? (Str::startsWith($post->image_path, 'posts/') ? asset('storage/' . $post->image_path) : asset('frontend/assets/images/' . $post->image_path)) : asset('frontend/assets/images/blog-placeholder.jpg') }}" alt="{{ $post->title ?? 'Post' }}" onerror="this.src='{{ asset('frontend/assets/images/blog-placeholder.jpg') }}';">
+                                <img src="{{ $post->image_path ? (Str::startsWith($post->image_path, 'posts/') ? asset('storage/' . $post->image_path) : asset('frontend/assets/images/' . basename($post->image_path))) : asset('frontend/assets/images/blog-placeholder.jpg') }}" alt="{{ $post->title ?? 'Post' }}" onerror="this.src='{{ asset('frontend/assets/images/blog-placeholder.jpg') }}';">
                             </div>
                             <div class="blog_list_content">
                                 <span class="date"><span>{{ $post->created_at->format('d') }}</span> {{ $post->created_at->format('M') }}</span>
@@ -47,7 +47,7 @@
                                 <li>
                                     <div class="single_sidebar_post d-flex mt-30">
                                         <div class="post_image">
-                                            <img src="{{ $popularPost->image_path ? (Str::startsWith($popularPost->image_path, 'posts/') ? asset('storage/' . $popularPost->image_path) : asset('frontend/assets/images/' . $popularPost->image_path)) : asset('frontend/assets/images/blog-placeholder.jpg') }}" alt="{{ $popularPost->title ?? 'Post' }}" onerror="this.src='{{ asset('frontend/assets/images/blog-placeholder.jpg') }}';">
+                                            <img src="{{ $popularPost->image_path ? (Str::startsWith($popularPost->image_path, 'posts/') ? asset('storage/' . $popularPost->image_path) : asset('frontend/assets/images/' . basename($popularPost->image_path))) : asset('frontend/assets/images/blog-placeholder.jpg') }}" alt="{{ $popularPost->title ?? 'Post' }}" onerror="this.src='{{ asset('frontend/assets/images/blog-placeholder.jpg') }}';">
                                         </div>
                                         <div class="post_content media-body">
                                             <h6 class="title"><a href="{{ route('posts.show', $popularPost->id) }}">{{ $popularPost->title ?? 'Untitled Post' }}</a></h6>
@@ -70,7 +70,13 @@
                         <h5 class="sidebar_title">Tags</h5>
                         <ul class="archives_tag">
                             @foreach($tags as $tag)
-                                <li><a href="{{ route('posts', ['tag' => $tag]) }}">{{ $tag }}</a></li>
+                                @if(is_array($tag))
+                                    @foreach($tag as $innerTag)
+                                        <li><a href="{{ route('posts', ['tag' => $innerTag]) }}">{{ $innerTag }}</a></li>
+                                    @endforeach
+                                @else
+                                    <li><a href="{{ route('posts', ['tag' => $tag]) }}">{{ $tag }}</a></li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>

@@ -56,7 +56,7 @@
                         <li><a class="{{ request()->routeIs('events') ? 'active' : '' }}" href="{{ route('events') }}">Events</a></li>
                         <li><a class="{{ request()->routeIs('webinars') ? 'active' : '' }}" href="{{ route('webinars') }}">Webinars</a></li>
                         <li><a class="{{ request()->routeIs('products') ? 'active' : '' }}" href="{{ route('products') }}">Store</a></li>
-                        <li><a class="{{ request()->routeIs('posts') ? 'active' : '' }}" href="{{ route('posts') }}">Blog</a></li>
+                        <li><a class="{{ request()->routeIs('posts') ? 'active' : '' }}" href="{{ route('posts') }}">Articles</a></li>
                     </ul>
                 </div>
                 <div class="navbar_meta">

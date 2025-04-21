@@ -45,7 +45,16 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('posts.details', compact('post'));
+        $popularPosts = Post::latest()->take(3)->get();
+        $archives = Post::selectRaw("strftime('%Y', created_at) as year, strftime('%m', created_at) as month, COUNT(*) as count")
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get()
+            ->toArray();
+        $tags = Post::whereNotNull('tags')->pluck('tags')->flatten()->unique()->values()->toArray();
+
+        return view('posts.details', compact('post', 'popularPosts', 'archives', 'tags'));
     }
 
     public function store(Request $request)
@@ -68,6 +77,6 @@ class PostController extends Controller
         }
 
         Post::create($data);
-        return redirect()->route('posts.index');
+        return redirect()->route('posts');
     }
 }

@@ -5,13 +5,37 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
-class EventController extends Controller {
-    public function index() {
-        $events = Event::latest()->get();
+class EventController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = Event::query();
+
+        // Search by title or description
+        if ($search = $request->query('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by type
+        if ($type = $request->query('type')) {
+            $query->where('type', $type);
+        }
+
+        $events = $query->latest()->paginate(6);
+
         return view('events.index', compact('events'));
     }
 
-    public function store(Request $request) {
+    public function show(Event $event)
+    {
+        return view('events.show', compact('event'));
+    }
+
+    public function store(Request $request)
+    {
         $data = $request->validate([
             'title' => 'required',
             'date' => 'required|date',
