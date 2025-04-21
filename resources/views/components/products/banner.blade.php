@@ -3,14 +3,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="banner_content text-center">
-                    <h4 class="title">Our Events</h4>
+                    <h4 class="title">Our Products</h4>
                     <ul class="breadcrumb justify-content-center">
                         <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a class="active" href="{{ route('events') }}">Events</a></li>
+                        <li><a class="active" href="{{ route('products') }}">Products</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
- 

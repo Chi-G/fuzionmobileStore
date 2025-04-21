@@ -1,9 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+    <x-products.banner />
+
     <section class="bg-gray-100 py-12">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl font-bold text-center mb-8">Our Products</h1>
+            <h1 class="text-3xl font-bold text-center mb-8">FuzionMobile Store</h1>
+            <p class="text-gray-600 mb-8 text-center max-w-4xl mx-auto">
+                Discover our comprehensive selection of premium mobile products, from cutting-edge smartphones and immersive VR technology to essential
+                SD cards and exclusive software licenses. Each product listing features high-resolution images, real-time inventory status, and transparent pricing.
+                Shopping is seamless with our secure payment options through Stripe and PayPal. Browse authentic customer reviews to make informed decisions and join
+                thousands of satisfied customers who trust FuzionMobile for quality hardware and software solutions.
+            </p>
             @if($products->isNotEmpty())
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($products as $product)
