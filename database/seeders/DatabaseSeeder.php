@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder {
         MarketingStrategy::factory(5)->create();
         Subscriber::factory(50)->create();
         $this->call(PostSeeder::class);
+        $this->call(WebinarSeeder::class);
     }
 }

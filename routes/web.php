@@ -40,6 +40,8 @@ Route::get('/events/{event}', [App\Http\Controllers\EventController::class, 'sho
 Route::post('/events', [App\Http\Controllers\EventController::class, 'store'])->name('events.store');
 
 Route::get('/webinars', [WebinarController::class, 'index'])->name('webinars');
+Route::get('/webinars/{webinar}', [App\Http\Controllers\WebinarController::class, 'show'])->name('webinars.show');
+Route::post('/webinars', [App\Http\Controllers\WebinarController::class, 'store'])->name('webinars.store');
 
 Route::get('/marketing', [MarketingStrategyController::class, 'index'])->name('marketing');
 

@@ -10,3 +10,4 @@ class Webinar extends Model {
     protected $table = 'webinars';
     protected $guarded = [];
 }
+ 
