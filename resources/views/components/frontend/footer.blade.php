@@ -62,8 +62,9 @@
     <div class="footer_copyright">
         <div class="container">
             <div class="footer_copyright_wrapper text-center d-md-flex justify-content-between">
-                <div class="copyright">
-                    <p>Designed & Developed with Love</p>
+                <div class="copyright text-gray-200">
+                    <a href="{{ route('terms') }}" class="text-gray-200">Term</a> |
+                    <a href="{{ route('privacy') }}" class="text-gray-200">Privacy</a>
                 </div>
                 <div class="copyright">
                     <p>© {{ date('Y') }} FuzionMobile. All rights reserved.</p>

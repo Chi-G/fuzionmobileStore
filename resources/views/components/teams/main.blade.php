@@ -8,7 +8,7 @@
                         <div class="single_courses courses_gray mt-30 text-center">
                             <!-- Team Member Image -->
                             <div class="courses_image">
-                                <img src="{{ $member->image_path && file_exists(public_path('frontend/assets/images/' . $member->image_path)) ? asset('frontend/assets/images/' . $member->image_path) : asset('frontend/assets/images/team-placeholder.jpg') }}" alt="{{ $member->name ?? 'Team Member' }}" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" onerror="this.src='{{ asset('frontend/assets/images/team-placeholder.jpg') }}';">
+                                <img src="{{ $member->image_path && file_exists(public_path('frontend/assets/images/' . $member->image_path)) ? asset('frontend/assets/images/' . $member->image_path) : asset('frontend/assets/images/team-placeholder.jpg') }}" alt="{{ $member->name ?? 'Team Member' }}" class="team-member-image mx-auto mb-4 object-contain" onerror="this.src='{{ asset('frontend/assets/images/team-placeholder.jpg') }}';">
                             </div>
                             <!-- Name and Role -->
                             <div class="courses_content">

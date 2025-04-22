@@ -19,7 +19,8 @@ use App\Http\Controllers\{
     PostController,
     SubscriberController,
     ProfileController,
-    HomeController
+    HomeController,
+    TermsPrivacyController
 };
 
 // Public Routes
@@ -61,6 +62,9 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 Route::post('subscribe', [SubscriberController::class, 'store'])->name('subscribe');
+
+Route::get('/terms', [App\Http\Controllers\TermsPrivacyController::class, 'term'])->name('terms');
+Route::get('/privacy', [App\Http\Controllers\TermsPrivacyController::class, 'privacy'])->name('privacy');
 
 // User Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
