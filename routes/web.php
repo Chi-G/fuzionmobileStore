@@ -28,6 +28,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [CompanyInfoController::class, 'index'])->name('about');
 
 Route::get('/team', [TeamMemberController::class, 'index'])->name('team');
+Route::post('/team', [TeamMemberController::class, 'store'])->name('team.store');
+Route::put('/team/{teamMember}', [TeamMemberController::class, 'update'])->name('team.update');
+Route::delete('/team/{teamMember}', [TeamMemberController::class, 'destroy'])->name('team.destroy');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/services/{service}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');
@@ -46,6 +49,10 @@ Route::post('/webinars', [App\Http\Controllers\WebinarController::class, 'store'
 Route::get('/marketing', [MarketingStrategyController::class, 'index'])->name('marketing');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/cart/add/{id}', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');

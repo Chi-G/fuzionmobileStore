@@ -1,15 +1,106 @@
-<section class="blog_details_page pb-130">
+<section class="courses_details_area pt-80 pb-130">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
-                <div class="blog_details_content">
-                    <p>{!! $product->description !!}</p>
-                    <p><strong>Price:</strong> ${{ number_format($product->price, 2) }}</p>
-                    <p><strong>Stock:</strong> {{ $product->stock }}</p>
-                    <p><strong>Type:</strong> {{ ucfirst($product->type) }}</p>
-                    <!-- Add Buy Now button or payment integration later -->
+            <div class="col-lg-4 order-lg-last">
+                <div class="courses_details_sidebar">
+                    <div class="courses_sidebar_image">
+                        <img src="{{ $product->image_path ? (Str::startsWith($product->image_path, 'products/') ? asset('storage/' . $product->image_path) : asset('frontend/assets/images/' . $product->image_path)) : asset('frontend/assets/images/product-placeholder.jpg') }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
+                        <div class="price">
+                            <div class="price_wrapper">
+                                <p>Price</p>
+                                <span>${{ number_format($product->price ?? 0, 2) }}</span>
+                            </div>
+                        </div>
+                        <div class="courses_btn">
+                            <a class="main-btn" href="{{ route('cart.add', $product->id) }}">Buy Now</a>
+                            <button class="main-btn mt-2" onclick="addToCart({{ $product->id }})">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="courses_sidebar_title">
+                        <h4 class="title">Product Details</h4>
+                    </div>
+                    <div class="courses_sidebar_list">
+                        <ul class="list">
+                            <li><i class="fa fa-users"></i> Purchases <span>{{ $product->enrollment_count ?? 0 }}</span></li>
+                            <li><i class="fa fa-star"></i> Rating <span>{{ number_format($product->rating ?? 0, 1) }}</span></li>
+                            <li><i class="fa fa-list"></i> Category <span>{{ $product->category ?? 'General' }}</span></li>
+                            <li><i class="fa fa-box"></i> Stock <span>{{ $product->stock ?? 0 }}</span></li>
+                        </ul>
+                        <ul class="social">
+                            <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 order-lg-first">
+                <div class="courses_details_content">
+                    <div class="single_courses_details mt-40">
+                        <h4 class="courses_details_title">Description</h4>
+                        <p>{{ $product->description ?? 'No description available.' }}</p>
+                    </div>
+                    <div class="courses_reviews mt-50">
+                        <div class="courses_top_bar">
+                            <div class="courses_title">
+                                <h4 class="courses_details_title">Reviews</h4>
+                            </div>
+                        </div>
+                        <div class="courses_reviews_wrapper d-md-flex align-items-center">
+                            <div class="average_rating text-center">
+                                <span class="rating_value">{{ number_format($product->rating ?? 0, 1) }}</span>
+                                <ul class="review_star">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <li><span><i class="fa {{ $i <= round($product->rating ?? 0) ? 'fa-star' : 'fa-star-o' }}"></i></span></li>
+                                    @endfor
+                                </ul>
+                                <p>Rated {{ number_format($product->rating ?? 0, 1) }} out of 5</p>
+                            </div>
+                        </div>
+                        <div class="courses_reviews_comment d-sm-flex">
+                            <div class="comment_author">
+                                <img src="{{ asset('frontend/assets/images/author-6.jpg') }}" alt="author">
+                            </div>
+                            <div class="comment_content media-body">
+                                <h5 class="author_name">Mike Helcher</h5>
+                                <ul class="star">
+                                    <li><span>Great</span></li>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <li><i class="fa fa-star"></i></li>
+                                    @endfor
+                                </ul>
+                                <p>This product offers excellent features and value, highly recommended for tech enthusiasts.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        @php
+            \Log::info('Product Details Component Rendered', [
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'image_path' => $product->image_path,
+                'author_image' => $product->author_image,
+                'category' => $product->category,
+            ]);
+        @endphp
     </div>
 </section>
+
+<script>
+function addToCart(productId) {
+    // Increment cart count
+    let cartCount = document.querySelector('.navbar_meta .cart span');
+    let currentCount = parseInt(cartCount.textContent) || 0;
+    cartCount.textContent = currentCount + 1;
+
+    // Store in localStorage
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push(productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    alert('Product added to cart!');
+}
+</script>

@@ -5537,3 +5537,31 @@ p {
 .single_courses:hover .tag span {
     color: inherit;
 }
+
+
+/*===========================
+    41.team and course css
+===========================*/
+.single_courses {
+    transition: transform 0.3s ease;
+}
+
+.single_courses:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social li a {
+    transition: color 0.3s ease;
+}
+
+.social li a:hover {
+    color: #007bff;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

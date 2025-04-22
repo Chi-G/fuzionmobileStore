@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder {
         Subscriber::factory(50)->create();
         $this->call(PostSeeder::class);
         $this->call(WebinarSeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }

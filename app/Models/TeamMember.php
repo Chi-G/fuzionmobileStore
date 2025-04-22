@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TeamMember extends Model {
+class TeamMember extends Model
+{
     use HasFactory;
 
     protected $guarded = [];
 
-    protected $casts = ['social_links' => 'array'];
+    protected $casts = [
+        'social_links' => 'array',
+    ];
 }
- 

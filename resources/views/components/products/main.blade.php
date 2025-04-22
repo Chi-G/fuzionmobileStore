@@ -1,45 +1,58 @@
-<section class="blog_list_page pt-80 pb-130">
+<section class="courses_area pt-100 pb-130">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                @if($products->isNotEmpty())
-                    <div class="row">
-                        @foreach($products as $product)
-                            <div class="col-lg-4 col-md-6 mb-30">
-                                <div class="single_blog_list">
-                                    <div class="blog_list_image">
-                                        <img src="{{ $product->image_path ? (Str::startsWith($product->image_path, 'products/') ? asset('storage/' . $product->image_path) : asset('frontend/assets/images/' . basename($product->image_path))) : asset('frontend/assets/images/product-placeholder.jpg') }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
+        @if($products->isNotEmpty())
+            <div class="row">
+                @foreach($products as $product)
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="{{ route('products.show', $product->id) }}" class="single_courses courses_gray mt-30" style="text-decoration: none;">
+                            <div class="courses_image">
+                                <img src="{{ $product->image_path ? (Str::startsWith($product->image_path, 'products/') ? asset('storage/' . $product->image_path) : asset('frontend/assets/images/' . $product->image_path)) : asset('frontend/assets/images/product-placeholder.jpg') }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
+                            </div>
+                            <div class="courses_content" style="margin-top: 20px;">
+                                @if($product->category)
+                                    <ul class="tag">
+                                        <li><span>{{ $product->category }}</span></li>
+                                    </ul>
+                                @endif
+                                <div class="courses_author d-flex">
+                                    <div class="author_image">
+                                        <img src="{{ $product->author_image ? asset('frontend/assets/images/' . $product->author_image) : asset('frontend/assets/images/author-placeholder.jpg') }}" alt="{{ $product->author_name ?? 'Author' }}" onerror="this.src='{{ asset('frontend/assets/images/author-placeholder.jpg') }}';">
                                     </div>
-                                    <div class="blog_list_content">
-                                        <h4 class="blog_title"><a href="{{ route('products.show', $product->id) }}">{{ $product->name ?? 'Unnamed Product' }}</a></h4>
-                                        <ul class="blog_meta">
-                                            <li><span>Type: {{ ucfirst($product->type) }}</span></li>
-                                            <li><span>Price: ${{ number_format($product->price, 2) }}</span></li>
-                                            <li><span>Stock: {{ $product->stock }}</span></li>
-                                        </ul>
-                                        <p>{{ Str::limit(strip_tags($product->description), 150) }}</p>
+                                    <div class="author_name media-body">
+                                        <span>{{ $product->author_name ?? 'Unknown' }}</span>
                                     </div>
                                 </div>
+                                <h4 class="title">{{ $product->name ?? 'Unnamed Product' }}</h4>
+                                <div class="meta d-flex justify-content-between">
+                                    <ul>
+                                        <li><i class="fa fa-user-o"></i> {{ $product->enrollment_count ?? 0 }}</li>
+                                        <li><i class="fa fa-star-o"></i> {{ number_format($product->rating ?? 0, 1) }}</li>
+                                    </ul>
+                                    <span>${{ number_format($product->price ?? 0, 2) }}</span>
+                                </div>
                             </div>
-                        @endforeach
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{ $products->links('vendor.pagination.bootstrap-5') }}
-                        </div>
-                    </div>
-                @else
-                    <div class="text-center">
-                        <p>No products available at this time.</p>
-                    </div>
-                @endif
+                        </a>
+                    </div> 
+                @endforeach
             </div>
-        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ $products->links('vendor.pagination.bootstrap-5') }}
+                </div>
+            </div>
+        @else
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>No products available at this time.</p>
+                </div>
+            </div>
+        @endif
         @php
             \Log::info('Products Component Rendered', [
                 'product_count' => $products->count(),
                 'image_paths' => $products->pluck('image_path')->toArray(),
+                'categories' => $products->pluck('category')->toArray(),
+                'author_images' => $products->pluck('author_image')->toArray(),
             ]);
         @endphp
-    </div>
 </section>
