@@ -7,3 +7,4 @@
     <!-- Details Main -->
     <x-products.details-main :product="$product" />
 @endsection
+ 

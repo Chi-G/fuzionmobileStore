@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -24,6 +25,11 @@ class Product extends Model
             throw new \InvalidArgumentException("Invalid type value: {$value}. Allowed values: " . implode(', ', static::$allowedTypes));
         }
         $this->attributes['type'] = $value;
+    }
+
+    public function getImagePathAttribute($value)
+    {
+        return $value ? (Str::startsWith($value, 'products/') ? asset('storage/' . $value) : asset('frontend/assets/images/' . $value)) : asset('frontend/assets/images/product-placeholder.jpg');
     }
 
     public function reviews() {

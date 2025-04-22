@@ -46,52 +46,11 @@
     <script src="{{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/jquery.appear.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- Toastr Initialization and Session Message Handling -->
-    <script>
-        $(document).ready(function() {
-            // Configure Toastr options
-            toastr.options = {
-                closeButton: true,
-                progressBar: true,
-                positionClass: 'toast-top-right',
-                timeOut: 5000,
-                showMethod: 'fadeIn',
-                hideMethod: 'fadeOut',
-            };
-
-            // Check for Laravel session messages
-            @if(session('success'))
-                toastr.success('{{ session('success') }}', 'Success');
-            @endif
-
-            @if(session('error'))
-                toastr.error('{{ session('error') }}', 'Error');
-            @endif
-
-            @if(session('info'))
-                toastr.info('{{ session('info') }}', 'Info');
-            @endif
-
-            @if(session('warning'))
-                toastr.warning('{{ session('warning') }}', 'Warning');
-            @endif
-
-            // Handle validation errors
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    toastr.error('{{ $error }}', 'Error');
-                @endforeach
-            @endif
-
-            // Navbar toggler
-            $('.navbar-toggler').on('click', function(e) {
-                e.preventDefault();
-                var $navbarContent = $('#navbarSupportedContent');
-                $navbarContent.toggleClass('show');
-            });
-        });
-    </script>
+    @include('partials.toastr')
+    @yield('scripts')
 </body>
 </html>

@@ -26,7 +26,7 @@
             <div class="col-lg-12">
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">1. Acceptance of Terms</h2>
+                        <h4 class="card-title fs-5">1. Acceptance of Terms</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">1.1</span> By accessing or using the Fuzion Mobile website, mobile applications, or services
@@ -38,7 +38,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">2. User Eligibility</h2>
+                        <h4 class="card-title fs-5">2. User Eligibility</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">2.1</span> Users must be at least 18 years old or have the consent of a legal guardian to use Fuzion Mobile.
@@ -49,7 +49,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">3. Product and Service Access</h2>
+                        <h4 class="card-title fs-5">3. Product and Service Access</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">3.1</span> Products and services on Fuzion Mobile, including smartphones, VR technology, SD cards, and software,
@@ -64,7 +64,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">4. Intellectual Property</h2>
+                        <h4 class="card-title fs-5">4. Intellectual Property</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">4.1</span> All content on Fuzion Mobile, including product designs, logos, trademarks, and website content,
@@ -75,7 +75,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">5. Refund Policy</h2>
+                        <h4 class="card-title fs-5">5. Refund Policy</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">5.1</span> Refund policies for products and services are outlined on the Fuzion Mobile website and may vary based on
@@ -86,7 +86,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">6. Privacy</h2>
+                        <h4 class="card-title fs-5">6. Privacy</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">6.1</span> Fuzion Mobile collects, stores, and processes user data in accordance with its Privacy Policy.
@@ -96,7 +96,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">7. Termination</h2>
+                        <h4 class="card-title fs-5">7. Termination</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">7.1</span> Fuzion Mobile reserves the right to terminate or suspend user accounts without notice for
@@ -106,7 +106,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">8. Modification of Terms</h2>
+                        <h4 class="card-title fs-5">8. Modification of Terms</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">8.1</span> Fuzion Mobile may modify these Terms and Conditions at any time. Users will be notified of
@@ -116,7 +116,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">9. Governing Law</h2>
+                        <h4 class="card-title fs-5">9. Governing Law</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">9.1</span> These Terms and Conditions are governed by the laws of the United States.
@@ -131,7 +131,7 @@
                 </div><!-- end card -->
                 <div class="card card-item">
                     <div class="card-body">
-                        <h2 class="card-title fs-5">10. Miscellaneous</h2>
+                        <h4 class="card-title fs-5">10. Miscellaneous</h4>
                         <div class="divider"><span></span></div>
                         <p>
                             <span class="fs-16 font-weight-semi-bold text-black">10.1</span> These Terms and Conditions constitute the entire agreement between the

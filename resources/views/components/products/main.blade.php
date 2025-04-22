@@ -1,4 +1,4 @@
-<section class="courses_area pt-100 pb-130">
+<section class="courses_area pt-1 pb-5">
     <div class="container">
         @if($products->isNotEmpty())
             <div class="row">
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div> 
+                    </div>
                 @endforeach
             </div>
             <div class="row">

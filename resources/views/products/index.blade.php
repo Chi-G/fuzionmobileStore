@@ -3,13 +3,15 @@
 @section('content')
     <x-products.banner />
 
-    <section class="pt-80">
+    <section class="pt-30">
         <div class="container">
-            <h3 class="text-3xl font-bold mb-4">Our Store</h3>
+            <h3 class="text-3xl font-bold mb-4">Premium Mobile Technology</h3>
             <p class="text-gray-600 mb-8 max-w-4xl">
-                Discover our premium mobile products, from smartphones and VR technology to SD cards and software licenses. Shop securely with Stripe and PayPal.
+                Browse our curated collection of industry-leading mobile solutions, including flagship smartphones,
+                immersive VR experiences, high-performance storage solutions, and exclusive software licenses.
+                Experience secure, seamless transactions with trusted payment partners Stripe and PayPal.
             </p>
             <x-products.main :products="$products" />
         </div>
     </section>
-@endsection
+@endsection 

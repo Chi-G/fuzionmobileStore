@@ -3,7 +3,7 @@
 @section('content')
     <x-webinars.banner :webinars="$webinars" />
 
-    <section class="pt-80">
+    <section class="pt-20">
         <div class="container">
             <p class="text-gray-600 mb-8">Elevate your knowledge with FuzionMobile's professional webinar platform.
                 Access our seamlessly integrated live sessions through Zoom, Webex, or Google Meet with just a simple registration.

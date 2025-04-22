@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="banner_content text-center">
-                    <h2 class="title">Privacy Policy</h2>
+                    <h4 class="title">Privacy Policy</h4>
                     <p class="text-gray-200 max-w-2xl mx-auto mt-4">
                         Learn how Fuzion Mobile protects your personal information and ensures your privacy while using our website and services.
                     </p>
@@ -28,7 +28,7 @@
                     <div class="terms-text">
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">Please read our policy carefully</h2>
+                                <h4 class="card-title fs-5">Please read our policy carefully</h4>
                                 <div class="divider"><span></span></div>
                                 <p>This Privacy Policy describes how Fuzion Mobile ("we," "us," or "our") collects, uses, and shares your personal information when you use our website, mobile applications, and services. We respect your privacy and are committed to protecting your personal information.</p>
                                 <p>By using our services, you agree to the collection and use of your personal information as described in this Privacy Policy. Protecting our users' privacy is a top priority for us, and we take this responsibility seriously.</p>
@@ -38,7 +38,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">1. Collection of Personal Information</h2>
+                                <h4 class="card-title fs-5">1. Collection of Personal Information</h4>
                                 <div class="divider"><span></span></div>
                                 <p>When you use Fuzion Mobile, we may collect the following types of personal information:</p>
                                 <ul class="generic-list-item generic-list-item-bullet">
@@ -56,7 +56,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">2. Use of Personal Information</h2>
+                                <h4 class="card-title fs-5">2. Use of Personal Information</h4>
                                 <div class="divider"><span></span></div>
                                 <p>We use your personal information for the following purposes:</p>
                                 <ul class="generic-list-item generic-list-item-bullet">
@@ -80,7 +80,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">3. Protection of Personal Information</h2>
+                                <h4 class="card-title fs-5">3. Protection of Personal Information</h4>
                                 <div class="divider"><span></span></div>
                                 <p>We take the protection of your personal information seriously and have implemented a variety of technical and organizational measures to safeguard your data.</p>
                                 <p>These measures include:</p>
@@ -105,7 +105,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">4. Sharing of Personal Information</h2>
+                                <h4 class="card-title fs-5">4. Sharing of Personal Information</h4>
                                 <div class="divider"><span></span></div>
                                 <p>We do not share your personal information with third parties, except in the following circumstances:</p>
                                 <ul class="generic-list-item generic-list-item-bullet">
@@ -123,7 +123,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">5. Cookies and Similar Technologies</h2>
+                                <h4 class="card-title fs-5">5. Cookies and Similar Technologies</h4>
                                 <div class="divider"><span></span></div>
                                 <p>We use cookies and other similar technologies to improve your experience on our website and apps.
                                     Cookies are small data files that are placed on your device when you visit our services.
@@ -134,7 +134,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">6. Updates to Privacy Policy</h2>
+                                <h4 class="card-title fs-5">6. Updates to Privacy Policy</h4>
                                 <div class="divider"><span></span></div>
                                 <p>We may update this Privacy Policy from time to time to reflect
                                     changes in our services or to comply with legal requirements. We encourage
@@ -145,7 +145,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">7. Your Rights</h2>
+                                <h4 class="card-title fs-5">7. Your Rights</h4>
                                 <div class="divider"><span></span></div>
                                 <p class="pb-3">You have certain rights with respect to your personal information, including:</p>
                                 <ul class="generic-list-item generic-list-item-bullet">
@@ -172,7 +172,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">8. Children's Privacy</h2>
+                                <h4 class="card-title fs-5">8. Children's Privacy</h4>
                                 <div class="divider"><span></span></div>
                                 <p>Our services are intended for users who are 18 years of age or older.
                                     We do not knowingly collect personal information from children under the age of 18.
@@ -183,7 +183,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">9. Contact Us</h2>
+                                <h4 class="card-title fs-5">9. Contact Us</h4>
                                 <div class="divider"><span></span></div>
                                 <p>If you have any questions or concerns about our Privacy Policy,
                                     please contact us at <a href="mailto:support@fuzionmobile.com" class="text-primary">support@fuzionmobile.com</a>.
@@ -193,7 +193,7 @@
                         </div><!-- end card -->
                         <div class="card card-item">
                             <div class="card-body">
-                                <h2 class="card-title fs-5">10. Effective Date</h2>
+                                <h4 class="card-title fs-5">10. Effective Date</h4>
                                 <div class="divider"><span></span></div>
                                 <p>This Privacy Policy is effective as of April 22, 2025.</p>
                             </div>

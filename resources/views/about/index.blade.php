@@ -14,7 +14,7 @@
     <x-about.features :companyInfo="$companyInfo" />
 
     <!-- Why Choose Us Section -->
-    <section class="why_choose_area pt-120 pb-130">
+    <section class="why_choose_area pt-30 pb-30">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -79,11 +79,10 @@
             </div>
         </div>
     </section>
-    {{-- <x-about.why-choose :companyInfo="$companyInfo" /> --}}
 
     <!-- Testimonial Section -->
     <x-about.testimonials />
 
     <!-- Team Section -->
-    <x-team :teamMembers="$teamMembers" /> 
+    <x-team :teamMembers="$teamMembers" />
 @endsection

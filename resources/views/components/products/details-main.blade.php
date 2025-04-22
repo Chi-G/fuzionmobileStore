@@ -1,10 +1,10 @@
-<section class="courses_details_area pt-80 pb-130">
+<section class="courses_details_area pt-30 pb-30">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 order-lg-last">
                 <div class="courses_details_sidebar">
                     <div class="courses_sidebar_image">
-                        <img src="{{ $product->image_path ? (Str::startsWith($product->image_path, 'products/') ? asset('storage/' . $product->image_path) : asset('frontend/assets/images/' . $product->image_path)) : asset('frontend/assets/images/product-placeholder.jpg') }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
+                        <img src="{{ $product->image_path }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
                         <div class="price">
                             <div class="price_wrapper">
                                 <p>Price</p>
@@ -12,8 +12,8 @@
                             </div>
                         </div>
                         <div class="courses_btn">
-                            <a class="main-btn" href="{{ route('cart.add', $product->id) }}">Buy Now</a>
-                            <button class="main-btn mt-2" onclick="addToCart({{ $product->id }})">Add to Cart</button>
+                            <a class="main-btn" href="{{ route('cart.buy-now', $product->id) }}">Buy Now</a>
+                            <a class="main-btn mt-2" href="{{ route('cart.add', $product->id) }}">Add to Cart</a>
                         </div>
                     </div>
                     <div class="courses_sidebar_title">
@@ -27,17 +27,17 @@
                             <li><i class="fa fa-box"></i> Stock <span>{{ $product->stock ?? 0 }}</span></li>
                         </ul>
                         <ul class="social">
-                            <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-lg-8 order-lg-first">
                 <div class="courses_details_content">
-                    <div class="single_courses_details mt-40">
+                    <div class="single_courses_details mt-30">
                         <h4 class="courses_details_title">Description</h4>
                         <p>{{ $product->description ?? 'No description available.' }}</p>
                     </div>
@@ -88,19 +88,4 @@
         @endphp
     </div>
 </section>
-
-<script>
-function addToCart(productId) {
-    // Increment cart count
-    let cartCount = document.querySelector('.navbar_meta .cart span');
-    let currentCount = parseInt(cartCount.textContent) || 0;
-    cartCount.textContent = currentCount + 1;
-
-    // Store in localStorage
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    cart.push(productId);
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    alert('Product added to cart!');
-}
-</script>
+?>

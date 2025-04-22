@@ -80,7 +80,7 @@
     </section>
 
     <!-- About -->
-    <section class="about_area pt-80">
+    <section class="about_area pt-40">
         <img class="shap_1" src="{{ asset('frontend/assets/images/shape/shape-1.png') }}" alt="shape">
         <img class="shap_2" src="{{ asset('frontend/assets/images/shape/shape-2.png') }}" alt="shape">
         <img class="shap_3" src="{{ asset('frontend/assets/images/shape/shape-3.png') }}" alt="shape">
@@ -107,7 +107,7 @@
     </section>
 
     <!-- Counter -->
-    <section class="counter_area pt-80 pb-130">
+    <section class="counter_area pt-40 pb-30">
         <div class="container">
             <div class="row counter_wrapper">
                 <div class="col-lg-3 col-sm-6 counter_col">
@@ -198,11 +198,11 @@
     </section>
 
     <!-- Program -->
-    <section class="program_area pt-120">
+    <section class="program_area pt-30">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="section_title section_title_2 text-center pb-50">
+                    <div class="section_title section_title_2 text-center pb-30">
                         <h3 class="main_title">Our Offerings</h3>
                         <p>Explore a suite of mobile-focused solutions and experiences designed to empower your digital journey.</p>
                     </div>
@@ -298,7 +298,7 @@
     </section>
 
     <!-- Why Choose Us -->
-    <section class="why_choose_area pt-120 pb-130">
+    <section class="why_choose_area pt-40 pb-30">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -365,7 +365,7 @@
     </section>
 
     <!-- Courses -->
-    <section class="courses_area courses_bg pt-120 pb-130">
+    <section class="courses_area courses_bg pt-40 pb-30">
         <img class="shape-1" src="{{ asset('frontend/assets/images/shape/shape-1.png') }}" alt="shape">
         <img class="shape-2" src="{{ asset('frontend/assets/images/shape/shape-2.png') }}" alt="shape">
         <img class="shape-3" src="{{ asset('frontend/assets/images/shape/shape-3.png') }}" alt="shape">
@@ -500,7 +500,7 @@
     </section>
 
     <!-- Testimonial -->
-    <section class="testimonial_area pt-80 pb-130 bg_cover" style="background-image: url({{ asset('frontend/assets/images/testimonial_bg.jpg') }})">
+    <section class="testimonial_area pt-40 pb-30 bg_cover" style="background-image: url({{ asset('frontend/assets/images/testimonial_bg.jpg') }})">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -533,11 +533,11 @@
     </section>
 
     <!-- Team -->
-    <section class="team_area pt-120 pb-130">
+    <section class="team_area pt-30 pb-70">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="section_title text-center pb-50">
+                    <div class="section_title text-center pb-30">
                         <h3 class="main_title">Meet Our Experts</h3>
                         <p>Our team drives innovation and delivers exceptional mobile solutions for you.</p>
                     </div>
@@ -607,7 +607,7 @@
                             <img src="{{ asset('frontend/assets/images/team-4.jpg') }}" alt="team">
                         </div>
                         <div class="team_content">
-                            <div class="team_content_wrapper"> 
+                            <div class="team_content_wrapper">
                                 <h4 class="title"><a href="#">Sophie Kim</a></h4>
                                 <span>Content Developer</span>
                                 <ul class="social">
@@ -669,7 +669,7 @@
     </section>
 
     <!-- Blog -->
-    <section class="blog_area pt-120 pb-130">
+    <section class="blog_area pt-30 pb-30">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">

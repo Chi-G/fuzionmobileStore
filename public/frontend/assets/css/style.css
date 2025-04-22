@@ -5565,3 +5565,79 @@ p {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+
+/*===========================
+    41.terms and privacy page css
+===========================*/
+
+.courses_area {
+    padding: 80px 0 130px;
+}
+
+.card-item {
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.divider {
+    margin: 15px 0;
+    border-top: 1px solid #e5e7eb;
+}
+
+.divider span {
+    display: block;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.font-weight-semi-bold {
+    font-weight: 600;
+}
+
+.terms-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.terms-text {
+    padding: 20px 0;
+}
+
+.generic-list-item {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.generic-list-item-bullet li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+}
+
+.generic-list-item-bullet li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-size: 18px;
+}
+
+
+/*===========================
+    41. cart checkout page css
+===========================*/
+.table img {
+    border-radius: 4px;
+}
+
+.form-control.w-25 {
+    display: inline-block;
+}

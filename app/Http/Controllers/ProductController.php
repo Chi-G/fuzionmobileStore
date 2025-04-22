@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(8); // Paginate 8 products per page
+        $products = Product::paginate(8);
         return view('products.index', compact('products'));
     }
 
@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'type' => 'required|in:smartphone,vr,sd_card,software', // Updated to match model
+            'type' => 'required|in:smartphone,vr,sd_card,software',
             'description' => 'required',
             'category' => 'nullable|string',
             'author_name' => 'nullable|string',

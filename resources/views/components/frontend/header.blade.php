@@ -4,8 +4,8 @@
             <div class="header_top_wrapper d-flex justify-content-center justify-content-md-between">
                 <div class="header_top_info d-none d-md-block">
                     <ul>
-                        <li><img src="{{ asset('frontend/assets/images/call.png') }}" alt="call"><a href="tel:+91458654528"> +220-2530620, +2203285061</a></li>
-                        <li><img src="{{ asset('frontend/assets/images/mail.png') }}" alt="mail"><a href="mailto:info@example.com">info@e-learning.gm</a></li>
+                        <li><img src="{{ asset('frontend/assets/images/call.png') }}" alt="call"><a href="tel:+12025550123">+1 (202) 555-0123</a></li>
+                        <li><img src="{{ asset('frontend/assets/images/mail.png') }}" alt="mail"><a href="mailto:support@fuzionmobile.com">support@fuzionmobile.com</a></li>
                     </ul>
                 </div>
                 <div class="header_top_login">
@@ -68,10 +68,11 @@
                                 <button><i class="fa fa-search"></i></button>
                             </div>
                         </li>
-                        <li><a href="{{ route('products') }}"><img src="{{ asset('frontend/assets/images/cart.png') }}" alt="cart"> <span>{{ $cartCount ?? 0 }}</span></a></li>
+                        <li><a href="{{ route('cart.index') }}"><img src="{{ asset('frontend/assets/images/cart.png') }}" alt="cart"> <span>{{ session('cart', []) ? count(session('cart')) : 0 }}</span></a></li>
                     </ul>
                 </div>
             </nav>
         </div>
     </div>
 </section>
+?>

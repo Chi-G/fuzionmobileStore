@@ -1,4 +1,4 @@
-<section class="blog_list_page pt-80 pb-130">
+<section class="blog_list_page pt-20 pb-40">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">

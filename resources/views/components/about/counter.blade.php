@@ -1,4 +1,4 @@
-<section class="counter_area pt-80 pb-130">
+<section class="counter_area pt-30 pb-30">
     <div class="container">
         <div class="row counter_wrapper">
             <div class="col-lg-3 col-sm-6 counter_col">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6 counter_col">
-                <div class="single_counter text-center mt-50">
+                <div class="single_counter text-center mt-30">
                     <div class="counter_icon">
                         <div class="icon_wrapper">
                             <img src="{{ asset('frontend/assets/images/count_icon-2.png') }}" alt="Icon">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6 counter_col">
-                <div class="single_counter text-center mt-50">
+                <div class="single_counter text-center mt-30">
                     <div class="counter_icon">
                         <div class="icon_wrapper">
                             <img src="{{ asset('frontend/assets/images/count_icon-3.png') }}" alt="Icon">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6 counter_col">
-                <div class="single_counter text-center mt-50">
+                <div class="single_counter text-center mt-30">
                     <div class="counter_icon">
                         <div class="icon_wrapper">
                             <img src="{{ asset('frontend/assets/images/count_icon-4.png') }}" alt="Icon">

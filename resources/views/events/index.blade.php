@@ -4,7 +4,7 @@
 
     <x-events.banner :events="$events" />
 
-    <section class="pt-80">
+    <section class="pt-30">
         <div class="container">
             <h3 class="text-3xl font-bold mb-4">Upcoming Events</h3>
             <p class="text-gray-600 mb-8">Discover FuzionMobile's dynamic event experiences designed with your convenience in mind.

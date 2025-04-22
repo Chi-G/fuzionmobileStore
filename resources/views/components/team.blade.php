@@ -1,8 +1,8 @@
-<section class="team_area pt-120 pb-130">
+<section class="team_area pt-30 pb-30">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="section_title text-center pb-50">
+                <div class="section_title text-center pb-30">
                     <h3 class="main_title">Meet Our Experts</h3>
                     <p>Our team drives innovation and delivers exceptional mobile solutions for you.</p>
                 </div>

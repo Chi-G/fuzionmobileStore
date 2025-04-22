@@ -8,6 +8,7 @@
     <meta name="author" content="Chijindu Nwokeohuru', 'chijindu.nwokeohuru@gmail.com">
     <title>FuzionMobile - {{ ucwords(str_replace('.', ' ', Route::currentRouteName() ?? 'Home')) }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @vite([
         'resources/css/app.css',
         'resources/js/app.js',
@@ -38,7 +39,7 @@
 
     {{-- <script src="{{ asset('frontend/assets/js/bootstrap.min.js') }}"></script> --}}
     {{-- <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script> --}}
-    
+
     <script src="{{ asset('frontend/assets/js/slick.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/waypoints.min.js') }}"></script>
@@ -47,15 +48,12 @@
     <script src="{{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/jquery.appear.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
-    <script>
-        $(document).ready(function() {
-            $('.navbar-toggler').on('click', function(e) {
-                e.preventDefault();
-                var $navbarContent = $('#navbarSupportedContent');
-                $navbarContent.toggleClass('show');
-            });
-        });
-    </script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Toastr Initialization and Session Message Handling -->
+    @include('partials.toastr')
+    @yield('scripts')
 </body>
 </html>
