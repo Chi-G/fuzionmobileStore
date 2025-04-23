@@ -50,16 +50,24 @@ Route::get('/marketing', [MarketingStrategyController::class, 'index'])->name('m
 // User Products Routes
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // User Cart Routes
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-Route::get('/cart/buy-now/{id}', [CartController::class, 'buyNow'])->name('cart.buy-now');
-Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
-Route::post('/checkout/process', [CartController::class, 'processCheckout'])->name('checkout.process');
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout/process', [CartController::class, 'processCheckout'])->name('checkout.process');
+    Route::post('/cart/buy-now/{product}', [CartController::class, 'buyNow'])->name('cart.buy-now');
+    Route::get('/buy-now-checkout', [CartController::class, 'buyNowCheckout'])->name('cart.buy-now-checkout');
+    Route::post('/buy-now-checkout/process', [CartController::class, 'processBuyNowCheckout'])->name('cart.buy-now-checkout.process');
+});
+
+Route::get('/order-confirmation/{order}', function ($order) {
+    return view('cart.confirmation', ['order' => \App\Models\Order::findOrFail($order)]);
+})->name('order.confirmation');
 
 // User Posts Routes
 Route::get('/posts', [PostController::class, 'index'])->name('posts');

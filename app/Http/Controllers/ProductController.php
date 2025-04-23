@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
 
 class ProductController extends Controller
 {
@@ -13,8 +18,20 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = Product::find($id);
+
+        if (!$product) {
+            Log::warning('Product not found', ['product_id' => $id]);
+            return redirect()->route('products')->with('error', 'Product not available.');
+        }
+
+        Log::info('ProductController::show', [
+            'product_id' => $product->id,
+            'name' => $product->name,
+        ]);
+
         return view('products.show', compact('product'));
     }
 

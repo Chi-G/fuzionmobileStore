@@ -8,6 +8,7 @@
     <meta name="author" content="Chijindu Nwokeohuru, chijindu.nwokeohuru@gmail.com">
     <title>FuzionMobile - {{ ucwords(str_replace('.', ' ', Route::currentRouteName() ?? 'Home')) }}</title>
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

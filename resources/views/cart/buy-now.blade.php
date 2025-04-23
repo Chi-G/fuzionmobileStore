@@ -3,10 +3,10 @@
 @section('content')
 <section class="flowbite-container py-4 md:py-8">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Checkout</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Buy Now</h2>
 
         @if (empty($items))
-            <p class="mt-6 text-gray-500 dark:text-gray-400">Your cart is empty. <a href="{{ route('products') }}" class="text-primary-700 underline hover:no-underline dark:text-primary-500">Browse products</a>.</p>
+            <p class="mt-6 text-gray-500 dark:text-gray-400">No product selected. <a href="{{ route('products') }}" class="text-primary-700 underline hover:no-underline dark:text-primary-500">Browse products</a>.</p>
         @else
             <div class="mt-6 space-y-6">
                 <!-- Cart Items -->
@@ -29,7 +29,7 @@
 
                 <!-- Delivery and Payment Form -->
                 <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
-                    <form action="{{ route('checkout.process') }}" method="POST" class="space-y-6">
+                    <form action="{{ route('cart.buy-now-checkout.process') }}" method="POST" class="space-y-6">
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Delivery Details -->

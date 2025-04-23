@@ -12,8 +12,16 @@
                             </div>
                         </div>
                         <div class="courses_btn">
-                            <a class="main-btn" href="{{ route('cart.buy-now', $product->id) }}">Buy Now</a>
-                            <a class="main-btn mt-2" href="{{ route('cart.add', $product->id) }}">Add to Cart</a>
+                            <form action="{{ route('cart.buy-now', $product->id) }}" method="POST" class="flex items-center gap-2">
+                                @csrf
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="main-btn">Buy Now</button>
+                            </form>
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex items-center gap-2 mt-2">
+                                @csrf
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="main-btn">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
                     <div class="courses_sidebar_title">
@@ -79,13 +87,12 @@
         </div>
         @php
             \Log::info('Product Details Component Rendered', [
-                'product_id' => $product->id,
-                'name' => $product->name,
-                'image_path' => $product->image_path,
-                'author_image' => $product->author_image,
-                'category' => $product->category,
+                'product_id' => $product->id ?? 'null',
+                'name' => $product->name ?? 'null',
+                'image_path' => $product->image_path ?? 'null',
+                'author_image' => $product->author_image ?? 'null',
+                'category' => $product->category ?? 'null',
             ]);
         @endphp
     </div>
 </section>
-?>

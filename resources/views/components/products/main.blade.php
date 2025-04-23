@@ -6,7 +6,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <a href="{{ route('products.show', $product->id) }}" class="single_courses courses_gray mt-30" style="text-decoration: none;">
                             <div class="courses_image">
-                                <img src="{{ $product->image_path ? (Str::startsWith($product->image_path, 'products/') ? asset('storage/' . $product->image_path) : asset('frontend/assets/images/' . $product->image_path)) : asset('frontend/assets/images/product-placeholder.jpg') }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
+                                <img src="{{ \Str::startsWith($product->image_path, 'http') ? $product->image_path : ($product->image_path ? asset('frontend/assets/images/' . $product->image_path) : asset('frontend/assets/images/product-placeholder.jpg')) }}" alt="{{ $product->name ?? 'Product' }}" onerror="this.src='{{ asset('frontend/assets/images/product-placeholder.jpg') }}';">
                             </div>
                             <div class="courses_content" style="margin-top: 20px;">
                                 @if($product->category)
@@ -16,7 +16,7 @@
                                 @endif
                                 <div class="courses_author d-flex">
                                     <div class="author_image">
-                                        <img src="{{ $product->author_image ? asset('frontend/assets/images/' . $product->author_image) : asset('frontend/assets/images/author-placeholder.jpg') }}" alt="{{ $product->author_name ?? 'Author' }}" onerror="this.src='{{ asset('frontend/assets/images/author-placeholder.jpg') }}';">
+                                        <img src="{{ \Str::startsWith($product->author_image, 'http') ? $product->author_image : ($product->author_image ? asset('frontend/assets/images/' . $product->author_image) : asset('frontend/assets/images/author-placeholder.jpg')) }}" alt="{{ $product->author_name ?? 'Author' }}" onerror="this.src='{{ asset('frontend/assets/images/author-placeholder.jpg') }}';">
                                     </div>
                                     <div class="author_name media-body">
                                         <span>{{ $product->author_name ?? 'Unknown' }}</span>
@@ -34,7 +34,7 @@
                         </a>
                     </div>
                 @endforeach
-            </div>
+            </div> 
             <div class="row">
                 <div class="col-lg-12">
                     {{ $products->links('vendor.pagination.bootstrap-5') }}

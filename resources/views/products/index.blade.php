@@ -14,4 +14,4 @@
             <x-products.main :products="$products" />
         </div>
     </section>
-@endsection 
+@endsection

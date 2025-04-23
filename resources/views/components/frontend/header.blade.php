@@ -16,7 +16,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="main-btn dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user-circle"></i> {{ Auth::user()->name }}
+                                    <i class="fa fa-user-circle"></i> {{ Auth::user()->name }} 
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                                     <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>

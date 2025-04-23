@@ -13,12 +13,21 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->json('items');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->json('products');
             $table->decimal('total', 8, 2);
-            $table->string('stripe_session_id')->nullable();
+            $table->string('name');
+            $table->string('email');
+            $table->string('country', 2);
+            $table->string('city');
+            $table->string('phone');
+            $table->string('company_name')->nullable();
+            $table->string('vat_number')->nullable();
+            $table->string('payment_method');
+            $table->string('delivery_method');
             $table->string('status')->default('pending');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
