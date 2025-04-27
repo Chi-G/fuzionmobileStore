@@ -3,7 +3,7 @@
 @section('content')
 <section class="flowbite-container py-4 md:py-8">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Buy Now</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-0">Buy Now</h2>
 
         @if (empty($items))
             <p class="mt-6 text-gray-500 dark:text-gray-400">No product selected. <a href="{{ route('products') }}" class="text-primary-700 underline hover:no-underline dark:text-primary-500">Browse products</a>.</p>

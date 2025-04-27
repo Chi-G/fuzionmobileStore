@@ -63,11 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/buy-now/{product}', [CartController::class, 'buyNow'])->name('cart.buy-now');
     Route::get('/buy-now-checkout', [CartController::class, 'buyNowCheckout'])->name('cart.buy-now-checkout');
     Route::post('/buy-now-checkout/process', [CartController::class, 'processBuyNowCheckout'])->name('cart.buy-now-checkout.process');
+    Route::get('/order-confirmation/{order}', [CartController::class, 'confirmation'])->name('order.confirmation');
 });
-
-Route::get('/order-confirmation/{order}', function ($order) {
-    return view('cart.confirmation', ['order' => \App\Models\Order::findOrFail($order)]);
-})->name('order.confirmation');
 
 // User Posts Routes
 Route::get('/posts', [PostController::class, 'index'])->name('posts');

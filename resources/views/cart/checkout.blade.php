@@ -3,7 +3,7 @@
 @section('content')
 <section class="flowbite-container py-4 md:py-8">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Checkout</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-0">Checkout</h2>
 
         @if (empty($items))
             <p class="mt-6 text-gray-500 dark:text-gray-400">Your cart is empty. <a href="{{ route('products') }}" class="text-primary-700 underline hover:no-underline dark:text-primary-500">Browse products</a>.</p>
@@ -46,7 +46,7 @@
                                     </div>
                                     <div>
                                         <label for="country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Country</label>
-                                        <input type="text" name="delivery[country]" id="country" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" maxlength="2" required>
+                                        <input type="text" name="delivery[country]" id="country" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
                                     </div>
                                     <div>
                                         <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">City</label>

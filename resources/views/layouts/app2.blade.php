@@ -29,7 +29,7 @@
 <body class="flex flex-col min-h-screen">
     <x-frontend.preloader />
     <x-frontend.header2 />
-    <main class="flex-grow">
+    <main class="flex-grow pt-16 md:pt-20">
         @yield('content')
     </main>
     <x-frontend.footer />

@@ -3,7 +3,7 @@
 @section('content')
 <section class="flowbite-container py-8 md:py-16">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Order Confirmation</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-0">Order Confirmation</h2>
         @if (session('success'))
             <div class="mt-4 rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-800 dark:text-green-400">{{ session('success') }}</div>
         @endif

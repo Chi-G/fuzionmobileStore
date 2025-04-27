@@ -376,5 +376,20 @@ class CartController extends Controller
             'status' => 'pending',
         ]);
     }
+
+    /**
+     * Display the order confirmation page.
+     *
+     * @param \App\Models\Order $order
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function confirmation(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            return redirect()->route('home')->with('error', 'You are not authorized to view this order.');
+        }
+
+        return view('cart.confirmation', compact('order'));
+    }
 }
 ?>
