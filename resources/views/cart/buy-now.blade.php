@@ -132,7 +132,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="flex justify-end">
+                                <div class="flex justify-center items-center gap-4 mt-6">
                                     <div class="w-full max-w-xs">
                                         <dl class="space-y-2">
                                             <div class="flex justify-between">
@@ -161,7 +161,6 @@
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
                         <p class="mt-4 text-white text-lg font-medium animate-pulse">Processing Payment...</p>
-                        {{-- <p class="mt-4 text-white text-lg font-medium">Processing Payment...</p> --}}
                     </div>
                 </div>
 

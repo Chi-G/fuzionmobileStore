@@ -132,7 +132,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="flex justify-center mt-6">
+                                <div class="flex justify-center items-center gap-4 mt-6">
                                     <div class="w-full max-w-xs">
                                         <dl class="space-y-2">
                                             <div class="flex justify-between">
@@ -154,6 +154,14 @@
                             </div>
                         </div>
                     </form>
+                </div>
+
+                 <!-- Loading Overlay -->
+                 <div id="loading-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="mt-4 text-white text-lg font-medium animate-pulse">Processing Payment...</p>
+                    </div>
                 </div>
 
                 <!-- Success Modal -->
@@ -181,6 +189,10 @@
 </section>
 @endsection
 
+@section('head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('scripts')
     <script src="https://js.stripe.com/v3/"></script>
     <script>
@@ -206,14 +218,17 @@
             cardExpiry.mount('#card-expiry');
             cardCvc.mount('#card-cvc');
 
-            const form = document.getElementById('buy-now-form');
+            const form = document.getElementById('checkout-form');
             const submitButton = document.getElementById('submit-button');
+            const loadingOverlay = document.getElementById('loading-overlay');
             const successModal = document.getElementById('success-modal');
             const closeModalButton = document.getElementById('close-modal');
             const confirmButton = document.getElementById('confirm-button');
 
-            const form = document.getElementById('checkout-form');
-            const submitButton = document.getElementById('submit-button');
+             // Function to show/hide loading overlay
+             const toggleLoading = (show) => {
+                loadingOverlay.classList.toggle('hidden', !show);
+            };
 
             // Function to show success modal
             const showSuccessModal = (redirectUrl) => {
@@ -222,15 +237,17 @@
                     console.log('Redirecting to:', redirectUrl);
                     window.location.href = redirectUrl;
                 };
-                closeModalButton.addEventListener('click', redirect);
-                confirmButton.addEventListener('click', redirect);
+                closeModalButton.addEventListener('click', redirect, { once: true });
+                confirmButton.addEventListener('click', redirect, { once: true });
             };
 
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 submitButton.disabled = true;
+                toggleLoading(true); // Show loading animation
 
                 try {
+                    // Create payment method
                     const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
                         type: 'card',
                         card: cardNumber,
@@ -242,6 +259,7 @@
                     if (paymentMethodError) {
                         console.error('Stripe PaymentMethod Error:', paymentMethodError);
                         toastr.error(paymentMethodError.message || 'Failed to process payment. Please check your card details.');
+                        toggleLoading(false); // Hide loading animation
                         submitButton.disabled = false;
                         return;
                     }
@@ -271,6 +289,7 @@
                     } catch (e) {
                         console.error('JSON Parse Error:', e, responseText);
                         toastr.error('Server returned invalid response. Please try again.');
+                        toggleLoading(false); // Hide loading animation
                         submitButton.disabled = false;
                         return;
                     }
@@ -278,23 +297,27 @@
                     if (result.error) {
                         console.error('Server Error:', result.error);
                         toastr.error(result.error);
+                        toggleLoading(false); // Hide loading animation
                         submitButton.disabled = false;
                         return;
                     }
 
                     if (result.requires_action) {
+                        // Handle 3D Secure authentication
                         const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(result.client_secret, {
                             payment_method: paymentMethod.id,
                         });
 
                         if (confirmError) {
                             console.error('Stripe Confirm Error:', confirmError);
-                            toastr.error(confirmError.message || 'Payment authentication failed.');
+                            toastr.error(confirmError.message || 'Payment authentication failed. Please try again.');
+                            toggleLoading(false); // Hide loading animation
                             submitButton.disabled = false;
                             return;
                         }
 
                         if (paymentIntent.status === 'succeeded') {
+                            // Resubmit form with order_id
                             console.log('Resubmitting with order_id:', result.order_id);
                             formData.append('order_id', result.order_id);
                             const resubmitResponse = await fetch('{{ route('checkout.process') }}', {
@@ -318,6 +341,7 @@
                             } catch (e) {
                                 console.error('Resubmit JSON Parse Error:', e, resubmitText);
                                 toastr.error('Server returned invalid response on resubmission. Please try again.');
+                                toggleLoading(false); // Hide loading animation
                                 submitButton.disabled = false;
                                 return;
                             }
@@ -325,20 +349,24 @@
                             if (resubmitResult.error) {
                                 console.error('Resubmit Server Error:', resubmitResult.error);
                                 toastr.error(resubmitResult.error.includes('order id is invalid') ? 'Order not found. Please start a new checkout.' : resubmitResult.error);
+                                toggleLoading(false); // Hide loading animation
                                 submitButton.disabled = false;
                                 return;
                             }
 
                             if (resubmitResult.success) {
+                                toggleLoading(false); // Hide loading animation
                                 showSuccessModal(resubmitResult.redirect);
                             }
                         }
                     } else if (result.success) {
+                        toggleLoading(false); // Hide loading animation
                         showSuccessModal(result.redirect);
                     }
                 } catch (err) {
                     console.error('Unexpected Error:', err);
                     toastr.error('An unexpected error occurred: ' + err.message);
+                    toggleLoading(false); // Hide loading animation
                     submitButton.disabled = false;
                 }
             });
