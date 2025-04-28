@@ -131,8 +131,9 @@
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <!-- Subtotal -->
-                                    <div class="pt-6 space-y-4">
+                                </div>
+                                <div class="flex justify-center mt-6">
+                                    <div class="w-full max-w-xs">
                                         <dl class="space-y-2">
                                             <div class="flex justify-between">
                                                 <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Subtotal</dt>
@@ -147,7 +148,7 @@
                                                 <dd class="text-base font-bold text-gray-900 dark:text-white">${{ number_format($total, 2) }}</dd>
                                             </div>
                                         </dl>
-                                        <button type="submit" id="submit-button" class="block w-full rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Complete Purchase</button>
+                                        <button type="submit" id="submit-button" class="mt-4 block w-full rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Complete Purchase</button>
                                     </div>
                                 </div>
                             </div>

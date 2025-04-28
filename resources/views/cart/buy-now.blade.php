@@ -105,7 +105,6 @@
                                     </div>
                                     <div id="credit-card-fields" class="mt-4 space-y-6">
                                         <div class="p-4 bg-white dark:bg-gray-700 rounded-lg">
-                                            <label for="card-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Card Number</label>
                                             <div id="card-number" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"></div>
                                             @error('card_number')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -133,7 +132,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="flex justify-end">
+                                <div class="flex justify-center mt-6">
                                     <div class="w-full max-w-xs">
                                         <dl class="space-y-2">
                                             <div class="flex justify-between">

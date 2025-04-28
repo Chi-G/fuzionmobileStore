@@ -22,8 +22,8 @@ class PostSeeder extends Seeder
         // Optional PDF paths in storage/pdfs/ (add actual files if needed)
         $pdfPaths = [
             null, // Some posts have no PDF
-            'pdfs/sample-1.pdf',
-            'pdfs/sample-2.pdf',
+            'sample-1.pdf',
+            'sample-2.pdf',
         ];
 
         // Categories for variety
@@ -36,7 +36,7 @@ class PostSeeder extends Seeder
                 'type' => $faker->randomElement(['blog', 'journal']),
                 'category' => $faker->randomElement($categories),
                 'tags' => json_encode($faker->words(3)),
-                'image_path' => 'frontend/assets/images/' . $faker->randomElement($imagePaths),
+                'image_path' => $faker->randomElement($imagePaths),
                 'pdf_path' => $faker->randomElement($pdfPaths),
                 'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
                 'updated_at' => $faker->dateTimeBetween('-1 year', 'now'),

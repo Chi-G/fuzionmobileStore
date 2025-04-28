@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
-                    <div class="flex justify-end">
+                    <div class="flex justify-center items-center gap-4">
                         <div class="w-full max-w-xs">
                             <dl class="space-y-2">
                                 <div class="flex justify-between">
