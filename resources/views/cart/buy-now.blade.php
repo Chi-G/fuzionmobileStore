@@ -155,6 +155,35 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- Loading Overlay -->
+                <div id="loading-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="mt-4 text-white text-lg font-medium animate-pulse">Processing Payment...</p>
+                        {{-- <p class="mt-4 text-white text-lg font-medium">Processing Payment...</p> --}}
+                    </div>
+                </div>
+
+                <!-- Success Modal -->
+                <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Payment Successful!</h3>
+                            <button id="close-modal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Your payment has been processed successfully. You will now be redirected to your order confirmation page.</p>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button id="confirm-button" class="rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">OK</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
     </div>
@@ -192,10 +221,31 @@
 
             const form = document.getElementById('buy-now-form');
             const submitButton = document.getElementById('submit-button');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const successModal = document.getElementById('success-modal');
+            const closeModalButton = document.getElementById('close-modal');
+            const confirmButton = document.getElementById('confirm-button');
+
+            // Function to show/hide loading overlay
+            const toggleLoading = (show) => {
+                loadingOverlay.classList.toggle('hidden', !show);
+            };
+
+            // Function to show success modal
+            const showSuccessModal = (redirectUrl) => {
+                successModal.classList.remove('hidden');
+                const redirect = () => {
+                    console.log('Redirecting to:', redirectUrl);
+                    window.location.href = redirectUrl;
+                };
+                closeModalButton.addEventListener('click', redirect, { once: true });
+                confirmButton.addEventListener('click', redirect, { once: true });
+            };
 
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 submitButton.disabled = true;
+                toggleLoading(true); // Show loading animation
 
                 try {
                     // Create payment method
@@ -210,6 +260,7 @@
                     if (paymentMethodError) {
                         console.error('Stripe PaymentMethod Error:', paymentMethodError);
                         toastr.error(paymentMethodError.message || 'Failed to process payment. Please check your card details.');
+                        toggleLoading(false); // Hide loading animation
                         submitButton.disabled = false;
                         return;
                     }
@@ -239,6 +290,7 @@
                     } catch (e) {
                         console.error('JSON Parse Error:', e, responseText);
                         toastr.error('Server returned invalid response. Please try again.');
+                        toggleLoading(false); // Hide loading animation
                         submitButton.disabled = false;
                         return;
                     }
@@ -246,6 +298,7 @@
                     if (result.error) {
                         console.error('Server Error:', result.error);
                         toastr.error(result.error);
+                        toggleLoading(false); // Hide loading animation
                         submitButton.disabled = false;
                         return;
                     }
@@ -259,6 +312,7 @@
                         if (confirmError) {
                             console.error('Stripe Confirm Error:', confirmError);
                             toastr.error(confirmError.message || 'Payment authentication failed. Please try again.');
+                            toggleLoading(false); // Hide loading animation
                             submitButton.disabled = false;
                             return;
                         }
@@ -288,6 +342,7 @@
                             } catch (e) {
                                 console.error('Resubmit JSON Parse Error:', e, resubmitText);
                                 toastr.error('Server returned invalid response on resubmission. Please try again.');
+                                toggleLoading(false); // Hide loading animation
                                 submitButton.disabled = false;
                                 return;
                             }
@@ -295,22 +350,24 @@
                             if (resubmitResult.error) {
                                 console.error('Resubmit Server Error:', resubmitResult.error);
                                 toastr.error(resubmitResult.error.includes('order id is invalid') ? 'Order not found. Please start a new checkout.' : resubmitResult.error);
+                                toggleLoading(false); // Hide loading animation
                                 submitButton.disabled = false;
                                 return;
                             }
 
                             if (resubmitResult.success) {
-                                console.log('Redirecting to:', resubmitResult.redirect);
-                                window.location.href = resubmitResult.redirect;
+                                toggleLoading(false); // Hide loading animation
+                                showSuccessModal(resubmitResult.redirect);
                             }
                         }
                     } else if (result.success) {
-                        console.log('Redirecting to:', result.redirect);
-                        window.location.href = result.redirect;
+                        toggleLoading(false); // Hide loading animation
+                        showSuccessModal(result.redirect);
                     }
                 } catch (err) {
                     console.error('Unexpected Error:', err);
                     toastr.error('An unexpected error occurred: ' + err.message);
+                    toggleLoading(false); // Hide loading animation
                     submitButton.disabled = false;
                 }
             });

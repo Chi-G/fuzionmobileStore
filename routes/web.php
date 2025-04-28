@@ -54,7 +54,7 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // User Cart Routes
-Route::group(function () {
+Route::group([], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
