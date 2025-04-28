@@ -9,15 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Log;
-use Stripe\Exception\CardException;
 
 class CartController extends Controller
 {
-    /**
-     * Display the cart with all items.
-     *
-     * @return \Illuminate\View\View
-     */
     public function index()
     {
         $cart = session('cart', []);
@@ -40,39 +34,28 @@ class CartController extends Controller
         return view('cart.index', compact('cartItems', 'total'));
     }
 
-    /**
-     * Add a product to the cart.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function add(Request $request, $id)
+    public function add(Request $request)
     {
-        $quantity = $request->input('quantity', 1);
         $request->validate([
-            'quantity' => 'integer|min:1',
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity' => 'nullable|integer|min:1',
         ]);
 
-        $product = Product::findOrFail($id);
+        $productId = $request->input('product_id');
+        $quantity = $request->input('quantity', 1);
+
+        $product = Product::findOrFail($productId);
         if ($quantity > $product->stock) {
             return redirect()->back()->with('error', 'Requested quantity exceeds available stock.');
         }
 
         $cart = session('cart', []);
-        $cart[$id] = isset($cart[$id]) ? $cart[$id] + $quantity : $quantity;
+        $cart[$productId] = isset($cart[$productId]) ? $cart[$productId] + $quantity : $quantity;
         session(['cart' => $cart]);
 
-        return redirect()->route('products.show', $product->id)->with('success', 'Product added to cart successfully.');
+        return redirect()->route('products.show', $productId)->with('success', 'Product added to cart successfully.');
     }
 
-    /**
-     * Update the quantity of a product in the cart.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -91,12 +74,6 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Cart updated successfully.');
     }
 
-    /**
-     * Remove a product from the cart.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function remove($id)
     {
         $cart = session('cart', []);
@@ -106,11 +83,6 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
     }
 
-    /**
-     * Display the checkout page with cart items.
-     *
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function checkout()
     {
         $cart = session('cart', []);
@@ -137,25 +109,19 @@ class CartController extends Controller
         return view('cart.checkout', compact('items', 'total'));
     }
 
-    /**
-     * Process the checkout and save the order.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function processCheckout(Request $request)
     {
         $request->validate([
             'delivery.name' => 'required|string|max:255',
             'delivery.email' => 'required|email|max:255',
-            'delivery.country' => 'required|string|max:2',
+            'delivery.country' => 'required|string|max:255',
             'delivery.city' => 'required|string|max:255',
-            'delivery.phone' => 'required|string|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',
+            'delivery.phone' => 'required|string',
             'delivery.company_name' => 'nullable|string|max:255',
             'delivery.vat_number' => 'nullable|string|max:50',
-            'payment_method' => 'required|string|in:credit_card,paypal',
+            'payment_method' => 'required|string|in:credit_card',
             'delivery_method' => 'required|string|in:dhl,fedex',
-            'payment_method_id' => 'required_if:payment_method,credit_card|string',
+            'payment_method_id' => 'required|string',
         ]);
 
         $cart = session('cart', []);
@@ -186,48 +152,36 @@ class CartController extends Controller
         }
 
         // Save order to database
-        $order = $this->saveOrder($request, $items, $total);
+        try {
+            $order = $this->saveOrder($request, $items, $total);
 
-        // Process Stripe payment
-        if ($request->payment_method === 'credit_card') {
+            // Process Stripe payment
             Stripe::setApiKey(config('services.stripe.secret'));
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $total * 100, // Convert to cents
+                'currency' => 'usd',
+                'payment_method' => $request->payment_method_id,
+                'confirmation_method' => 'manual',
+                'confirm' => true,
+                'metadata' => ['order_id' => $order->id],
+            ]);
 
-            try {
-                $paymentIntent = PaymentIntent::create([
-                    'amount' => $total * 100, // Convert to cents
-                    'currency' => 'usd',
-                    'payment_method' => $request->payment_method_id,
-                    'confirmation_method' => 'manual',
-                    'confirm' => true,
-                    'metadata' => ['order_id' => $order->id],
-                ]);
+            // Update order status
+            $order->update(['status' => 'completed']);
 
-                // Update order status
-                $order->update(['status' => 'completed']);
+            // Clear session
+            session()->forget(['cart', 'delivery', 'payment_method', 'delivery_method', 'buy_now']);
 
-                // Clear session
-                session()->forget(['cart', 'delivery', 'payment_method', 'delivery_method', 'buy_now']);
-
-                return redirect()->route('order.confirmation', $order->id)->with('success', 'Payment successful! Your order has been placed.');
-            } catch (\Exception $e) {
-                return redirect()->route('checkout')->with('error', 'Payment failed: ' . $e->getMessage());
-            }
+            return redirect()->route('order.confirmation', $order->id)->with('success', 'Payment successful! Your order has been placed.');
+        } catch (\Exception $e) {
+            Log::error('Checkout Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return redirect()->route('checkout')->with('error', 'Checkout failed: ' . $e->getMessage());
         }
-
-        // Placeholder for other payment methods
-        return redirect()->route('checkout')->with('error', 'Selected payment method is not available.');
     }
 
-    /**
-     * Handle "Buy Now" for a single product.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $productId
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function buyNow(Request $request, $productId)
     {
-        $quantity = $request->input('quantity', 1); // Default to 1 if not provided
+        $quantity = $request->input('quantity', 1);
         $request->validate([
             'quantity' => 'integer|min:1',
         ]);
@@ -237,7 +191,6 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Requested quantity exceeds available stock.');
         }
 
-        // Store single item in session for checkout
         session(['buy_now' => [
             'product_id' => $product->id,
             'quantity' => $quantity,
@@ -246,11 +199,6 @@ class CartController extends Controller
         return redirect()->route('cart.buy-now-checkout');
     }
 
-    /**
-     * Display checkout for "Buy Now" purchase.
-     *
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function buyNowCheckout()
     {
         $buyNow = session('buy_now');
@@ -274,25 +222,19 @@ class CartController extends Controller
         return view('cart.buy-now', compact('items', 'total'));
     }
 
-    /**
-     * Process "Buy Now" checkout and save the order.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function processBuyNowCheckout(Request $request)
     {
         $request->validate([
             'delivery.name' => 'required|string|max:255',
             'delivery.email' => 'required|email|max:255',
-            'delivery.country' => 'required|string|max:2',
+            'delivery.country' => 'required|string|max:255',
             'delivery.city' => 'required|string|max:255',
-            'delivery.phone' => 'required|string|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',
+            'delivery.phone' => 'required|string',
             'delivery.company_name' => 'nullable|string|max:255',
             'delivery.vat_number' => 'nullable|string|max:50',
-            'payment_method' => 'required|string|in:credit_card,paypal',
+            'payment_method' => 'required|string|in:credit_card',
             'delivery_method' => 'required|string|in:dhl,fedex',
-            'payment_method_id' => 'required_if:payment_method,credit_card|string',
+            'payment_method_id' => 'required|string',
         ]);
 
         $buyNow = session('buy_now');
@@ -318,78 +260,70 @@ class CartController extends Controller
         $total = $subtotal;
 
         // Save order to database
-        $order = $this->saveOrder($request, $items, $total);
+        try {
+            $order = $this->saveOrder($request, $items, $total);
 
-        // Process Stripe payment
-        if ($request->payment_method === 'credit_card') {
+            // Process Stripe payment
             Stripe::setApiKey(config('services.stripe.secret'));
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $total * 100, // Convert to cents
+                'currency' => 'usd',
+                'payment_method' => $request->payment_method_id,
+                'confirmation_method' => 'manual',
+                'confirm' => true,
+                'metadata' => ['order_id' => $order->id],
+            ]);
 
-            try {
-                $paymentIntent = PaymentIntent::create([
-                    'amount' => $total * 100, // Convert to cents
-                    'currency' => 'usd',
-                    'payment_method' => $request->payment_method_id,
-                    'confirmation_method' => 'manual',
-                    'confirm' => true,
-                    'metadata' => ['order_id' => $order->id],
-                ]);
+            // Update order status
+            $order->update(['status' => 'completed']);
 
-                // Update order status
-                $order->update(['status' => 'completed']);
+            // Clear session
+            session()->forget(['buy_now', 'delivery', 'payment_method', 'delivery_method']);
 
-                // Clear session
-                session()->forget(['buy_now', 'delivery', 'payment_method', 'delivery_method']);
-
-                return redirect()->route('order.confirmation', $order->id)->with('success', 'Payment successful! Your order has been placed.');
-            } catch (\Exception $e) {
-                return redirect()->route('cart.buy-now-checkout')->with('error', 'Payment failed: ' . $e->getMessage());
-            }
+            return redirect()->route('order.confirmation', $order->id)->with('success', 'Payment successful! Your order has been placed.');
+        } catch (\Exception $e) {
+            Log::error('Buy Now Checkout Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return redirect()->route('cart.buy-now-checkout')->with('error', 'Checkout failed: ' . $e->getMessage());
         }
-
-        // Placeholder for other payment methods
-        return redirect()->route('cart.buy-now-checkout')->with('error', 'Selected payment method is not available.');
     }
 
-    /**
-     * Save order to the database.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param array $items
-     * @param float $total
-     * @return \App\Models\Order
-     */
     protected function saveOrder(Request $request, array $items, float $total)
     {
-        return Order::create([
-            'user_id' => Auth::id(),
-            'products' => json_encode($items),
+        $orderData = [
+            'user_id' => Auth::id() ?? null, // Allow guest orders
             'total' => $total,
-            'name' => $request->delivery['name'],
-            'email' => $request->delivery['email'],
-            'country' => $request->delivery['country'],
-            'city' => $request->delivery['city'],
-            'phone' => $request->delivery['phone'],
-            'company_name' => $request->delivery['company_name'] ?? null,
-            'vat_number' => $request->delivery['vat_number'] ?? null,
+            'status' => 'pending',
+            'delivery_name' => $request->delivery['name'],
+            'delivery_email' => $request->delivery['email'],
+            'delivery_country' => $request->delivery['country'],
+            'delivery_city' => $request->delivery['city'],
+            'delivery_phone' => $request->delivery['phone'],
+            'delivery_company_name' => $request->delivery['company_name'] ?? null,
+            'delivery_vat_number' => $request->delivery['vat_number'] ?? null,
             'payment_method' => $request->payment_method,
             'delivery_method' => $request->delivery_method,
-            'status' => 'pending',
-        ]);
+        ];
+
+        $order = Order::create($orderData);
+
+        foreach ($items as $item) {
+            $order->items()->create([
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+                'subtotal' => $item['subtotal'],
+            ]);
+        }
+
+        return $order;
     }
 
-    /**
-     * Display the order confirmation page.
-     *
-     * @param \App\Models\Order $order
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function confirmation(Order $order)
     {
-        if ($order->user_id !== Auth::id()) {
+        if ($order->user_id !== Auth::id() && Auth::id() !== null) {
             return redirect()->route('home')->with('error', 'You are not authorized to view this order.');
         }
 
         return view('cart.confirmation', compact('order'));
     }
 }
-?>

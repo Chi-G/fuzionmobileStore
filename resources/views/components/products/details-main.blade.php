@@ -17,8 +17,9 @@
                                 <input type="hidden" name="quantity" value="1">
                                 <button type="submit" class="main-btn">Buy Now</button>
                             </form>
-                            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex items-center gap-2 mt-2">
+                            <form action="{{ route('cart.add') }}" method="POST" class="flex items-center gap-2 mt-2">
                                 @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="hidden" name="quantity" value="1">
                                 <button type="submit" class="main-btn">Add to Cart</button>
                             </form>

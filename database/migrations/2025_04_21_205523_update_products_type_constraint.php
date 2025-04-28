@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('type'); // No CHECK constraint; validate in model
+            $table->string('type')->change();
             $table->string('category')->nullable();
             $table->string('author_name')->nullable();
             $table->string('author_image')->nullable();
@@ -28,9 +28,6 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->timestamps();
         });
-
-        // Optional: Add comment or metadata for allowed types
-        DB::statement("COMMENT ON COLUMN products.type IS 'Allowed values: smartphone, vr, sd_card, software'");
     }
 
     public function down()
@@ -42,7 +39,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('type');
+            $table->string('type')->change();
             $table->string('category')->nullable();
             $table->string('author_name')->nullable();
             $table->string('author_image')->nullable();
@@ -53,7 +50,5 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->timestamps();
         });
-
-        DB::statement("COMMENT ON COLUMN products.type IS 'Allowed values: smartphone, sd_card, software'");
     }
 };

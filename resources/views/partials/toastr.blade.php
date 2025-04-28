@@ -27,7 +27,7 @@
             toastr.warning('{{ session('warning') }}', 'Warning');
         @endif
 
-        @if (auth()->guest() && in_array(Route::currentRouteName(), ['cart.index', 'checkout', 'cart.buy-now-checkout']))
+        @if (auth()->guest() && in_array(Route::currentRouteName(), ['cart.index', 'checkout', 'cart.buy-now-checkout', 'order.confirmation']))
             toastr.error('Please log in to access this page.');
             setTimeout(() => { window.location.href = '{{ route('login') }}'; }, 2000);
         @endif
