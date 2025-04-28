@@ -161,6 +161,10 @@
 </section>
 @endsection
 
+@section('head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('scripts')
     <script src="https://js.stripe.com/v3/"></script>
     <script>
@@ -194,6 +198,7 @@
                 submitButton.disabled = true;
 
                 try {
+                    // Create payment method
                     const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
                         type: 'card',
                         card: cardNumber,
@@ -246,18 +251,21 @@
                     }
 
                     if (result.requires_action) {
+                        // Handle 3D Secure authentication
                         const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(result.client_secret, {
                             payment_method: paymentMethod.id,
                         });
 
                         if (confirmError) {
                             console.error('Stripe Confirm Error:', confirmError);
-                            toastr.error(confirmError.message || 'Payment authentication failed.');
+                            toastr.error(confirmError.message || 'Payment authentication failed. Please try again.');
                             submitButton.disabled = false;
                             return;
                         }
 
                         if (paymentIntent.status === 'succeeded') {
+                            // Resubmit form with order_id
+                            console.log('Resubmitting with order_id:', result.order_id);
                             formData.append('order_id', result.order_id);
                             const resubmitResponse = await fetch('{{ route('cart.buy-now-checkout.process') }}', {
                                 method: 'POST',
@@ -272,6 +280,7 @@
                             const resubmitText = await resubmitResponse.text();
                             console.log('Resubmit Response Status:', resubmitResponse.status);
                             console.log('Resubmit Response Text:', resubmitText);
+                            console.log('Resubmit Form Data:', Object.fromEntries(formData));
 
                             let resubmitResult;
                             try {
@@ -285,16 +294,18 @@
 
                             if (resubmitResult.error) {
                                 console.error('Resubmit Server Error:', resubmitResult.error);
-                                toastr.error(resubmitResult.error);
+                                toastr.error(resubmitResult.error.includes('order id is invalid') ? 'Order not found. Please start a new checkout.' : resubmitResult.error);
                                 submitButton.disabled = false;
                                 return;
                             }
 
                             if (resubmitResult.success) {
+                                console.log('Redirecting to:', resubmitResult.redirect);
                                 window.location.href = resubmitResult.redirect;
                             }
                         }
                     } else if (result.success) {
+                        console.log('Redirecting to:', result.redirect);
                         window.location.href = result.redirect;
                     }
                 } catch (err) {
@@ -305,8 +316,4 @@
             });
         });
     </script>
-@endsection
-
-@section('head')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection

@@ -128,11 +128,13 @@ class CartController extends Controller
             ]);
 
             // Log request data
-            Log::info('Checkout Request', ['data' => $request->all()]);
+            Log::info('Checkout Request', ['data' => $request->all(), 'user_id' => Auth::id()]);
 
             // Check for resubmission with order_id
             if ($request->has('order_id')) {
-                $order = Order::findOrFail($request->order_id);
+                $order = Order::where('id', $request->order_id)
+                    ->when(Auth::check(), fn($query) => $query->where('user_id', Auth::id()))
+                    ->firstOrFail();
                 if ($order->status === 'completed') {
                     return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
                 }
@@ -146,7 +148,7 @@ class CartController extends Controller
                     }
                     return response()->json(['error' => 'Payment not completed.']);
                 } catch (\Exception $e) {
-                    Log::error('Checkout Resubmission Error', ['error' => $e->getMessage(), 'order_id' => $order->id, 'trace' => $e->getTraceAsString()]);
+                    Log::error('Checkout Resubmission Error', ['error' => $e->getMessage(), 'order_id' => $order->id, 'user_id' => Auth::id(), 'trace' => $e->getTraceAsString()]);
                     return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
                 }
             }
@@ -198,6 +200,7 @@ class CartController extends Controller
 
                 // Save payment_intent_id
                 $order->update(['payment_intent_id' => $paymentIntent->id]);
+                DB::commit(); // Commit transaction before 3D Secure
 
                 if ($paymentIntent->status === 'requires_action' || $paymentIntent->status === 'requires_confirmation') {
                     return response()->json([
@@ -209,7 +212,6 @@ class CartController extends Controller
 
                 // Update order status
                 $order->update(['status' => 'completed']);
-                DB::commit();
 
                 // Clear session
                 session()->forget(['cart', 'delivery', 'payment_method', 'delivery_method', 'buy_now']);
@@ -217,14 +219,11 @@ class CartController extends Controller
                 return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                if (isset($order)) {
-                    $order->delete();
-                }
-                Log::error('Checkout Error', ['error' => $e->getMessage(), 'order_data' => $request->all(), 'trace' => $e->getTraceAsString()]);
+                Log::error('Checkout Error', ['error' => $e->getMessage(), 'order_data' => $request->all(), 'user_id' => Auth::id(), 'trace' => $e->getTraceAsString()]);
                 return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
             }
         } catch (\Exception $e) {
-            Log::error('Checkout Unexpected Error', ['error' => $e->getMessage(), 'request' => $request->all(), 'trace' => $e->getTraceAsString()]);
+            Log::error('Checkout Unexpected Error', ['error' => $e->getMessage(), 'request' => $request->all(), 'user_id' => Auth::id(), 'trace' => $e->getTraceAsString()]);
             return response()->json(['error' => 'Unexpected error: ' . $e->getMessage()], 500);
         }
     }
@@ -290,11 +289,13 @@ class CartController extends Controller
             ]);
 
             // Log request data
-            Log::info('Buy Now Checkout Request', ['data' => $request->all()]);
+            Log::info('Buy Now Checkout Request', ['data' => $request->all(), 'user_id' => Auth::id()]);
 
             // Check for resubmission with order_id
             if ($request->has('order_id')) {
-                $order = Order::findOrFail($request->order_id);
+                $order = Order::where('id', $request->order_id)
+                    ->when(Auth::check(), fn($query) => $query->where('user_id', Auth::id()))
+                    ->firstOrFail();
                 if ($order->status === 'completed') {
                     return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
                 }
@@ -308,7 +309,7 @@ class CartController extends Controller
                     }
                     return response()->json(['error' => 'Payment not completed.']);
                 } catch (\Exception $e) {
-                    Log::error('Buy Now Checkout Resubmission Error', ['error' => $e->getMessage(), 'order_id' => $order->id, 'trace' => $e->getTraceAsString()]);
+                    Log::error('Buy Now Checkout Resubmission Error', ['error' => $e->getMessage(), 'order_id' => $order->id, 'user_id' => Auth::id(), 'trace' => $e->getTraceAsString()]);
                     return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
                 }
             }
@@ -355,6 +356,7 @@ class CartController extends Controller
 
                 // Save payment_intent_id
                 $order->update(['payment_intent_id' => $paymentIntent->id]);
+                DB::commit(); // Commit transaction before 3D Secure
 
                 if ($paymentIntent->status === 'requires_action' || $paymentIntent->status === 'requires_confirmation') {
                     return response()->json([
@@ -366,7 +368,6 @@ class CartController extends Controller
 
                 // Update order status
                 $order->update(['status' => 'completed']);
-                DB::commit();
 
                 // Clear session
                 session()->forget(['buy_now', 'delivery', 'payment_method', 'delivery_method']);
@@ -374,14 +375,11 @@ class CartController extends Controller
                 return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                if (isset($order)) {
-                    $order->delete();
-                }
-                Log::error('Buy Now Checkout Error', ['error' => $e->getMessage(), 'order_data' => $request->all(), 'trace' => $e->getTraceAsString()]);
+                Log::error('Buy Now Checkout Error', ['error' => $e->getMessage(), 'order_data' => $request->all(), 'user_id' => Auth::id(), 'trace' => $e->getTraceAsString()]);
                 return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
             }
         } catch (\Exception $e) {
-            Log::error('Buy Now Checkout Unexpected Error', ['error' => $e->getMessage(), 'request' => $request->all(), 'trace' => $e->getTraceAsString()]);
+            Log::error('Buy Now Checkout Unexpected Error', ['error' => $e->getMessage(), 'request' => $request->all(), 'user_id' => Auth::id(), 'trace' => $e->getTraceAsString()]);
             return response()->json(['error' => 'Unexpected error: ' . $e->getMessage()], 500);
         }
     }

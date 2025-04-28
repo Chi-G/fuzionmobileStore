@@ -14,7 +14,8 @@ use App\Http\Controllers\{
     ProfileController,
     HomeController,
     TermsPrivacyController,
-    CartController
+    CartController,
+    StripeWebhookController
 };
 
 // Public Routes
@@ -53,7 +54,7 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // User Cart Routes
-Route::middleware('auth')->group(function () {
+Route::group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
@@ -65,6 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/buy-now-checkout/process', [CartController::class, 'processBuyNowCheckout'])->name('cart.buy-now-checkout.process');
     Route::get('/order-confirmation/{order}', [CartController::class, 'confirmation'])->name('order.confirmation');
 });
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');
 
 // User Posts Routes
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
