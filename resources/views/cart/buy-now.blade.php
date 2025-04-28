@@ -105,6 +105,7 @@
                                     </div>
                                     <div id="credit-card-fields" class="mt-4 space-y-6">
                                         <div class="p-4 bg-white dark:bg-gray-700 rounded-lg">
+                                            <label for="card-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Card Number</label>
                                             <div id="card-number" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white p-2"></div>
                                             @error('card_number')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -132,7 +133,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="flex justify-center mt-6">
+                                <div class="flex justify-end">
                                     <div class="w-full max-w-xs">
                                         <dl class="space-y-2">
                                             <div class="flex justify-between">
@@ -194,7 +195,7 @@
                 submitButton.disabled = true;
 
                 try {
-                    const { error, paymentMethod } = await stripe.createPaymentMethod({
+                    const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
                         type: 'card',
                         card: cardNumber,
                         billing_details: {
@@ -202,21 +203,111 @@
                         },
                     });
 
-                    if (error) {
-                        console.error('Stripe Error:', error);
-                        toastr.error(error.message || 'Failed to process payment. Please check your card details.');
+                    if (paymentMethodError) {
+                        console.error('Stripe PaymentMethod Error:', paymentMethodError);
+                        toastr.error(paymentMethodError.message || 'Failed to process payment. Please check your card details.');
                         submitButton.disabled = false;
                         return;
                     }
 
                     document.getElementById('payment_method_id').value = paymentMethod.id;
-                    form.submit();
+
+                    // Submit form to server
+                    const formData = new FormData(form);
+                    const response = await fetch('{{ route('cart.buy-now-checkout.process') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                        },
+                        body: new URLSearchParams(formData),
+                    });
+
+                    // Log response for debugging
+                    const responseText = await response.text();
+                    console.log('Response Status:', response.status);
+                    console.log('Response Text:', responseText);
+
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (e) {
+                        console.error('JSON Parse Error:', e, responseText);
+                        toastr.error('Server returned invalid response. Please try again.');
+                        submitButton.disabled = false;
+                        return;
+                    }
+
+                    if (result.error) {
+                        console.error('Server Error:', result.error);
+                        toastr.error(result.error);
+                        submitButton.disabled = false;
+                        return;
+                    }
+
+                    if (result.requires_action) {
+                        const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(result.client_secret, {
+                            payment_method: paymentMethod.id,
+                        });
+
+                        if (confirmError) {
+                            console.error('Stripe Confirm Error:', confirmError);
+                            toastr.error(confirmError.message || 'Payment authentication failed.');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        if (paymentIntent.status === 'succeeded') {
+                            formData.append('order_id', result.order_id);
+                            const resubmitResponse = await fetch('{{ route('cart.buy-now-checkout.process') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                    'Accept': 'application/json',
+                                },
+                                body: new URLSearchParams(formData),
+                            });
+
+                            const resubmitText = await resubmitResponse.text();
+                            console.log('Resubmit Response Status:', resubmitResponse.status);
+                            console.log('Resubmit Response Text:', resubmitText);
+
+                            let resubmitResult;
+                            try {
+                                resubmitResult = JSON.parse(resubmitText);
+                            } catch (e) {
+                                console.error('Resubmit JSON Parse Error:', e, resubmitText);
+                                toastr.error('Server returned invalid response on resubmission. Please try again.');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            if (resubmitResult.error) {
+                                console.error('Resubmit Server Error:', resubmitResult.error);
+                                toastr.error(resubmitResult.error);
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            if (resubmitResult.success) {
+                                window.location.href = resubmitResult.redirect;
+                            }
+                        }
+                    } else if (result.success) {
+                        window.location.href = result.redirect;
+                    }
                 } catch (err) {
                     console.error('Unexpected Error:', err);
-                    toastr.error('An unexpected error occurred. Please try again.');
+                    toastr.error('An unexpected error occurred: ' + err.message);
                     submitButton.disabled = false;
                 }
             });
         });
     </script>
+@endsection
+
+@section('head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection

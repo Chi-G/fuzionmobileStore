@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -111,71 +112,120 @@ class CartController extends Controller
 
     public function processCheckout(Request $request)
     {
-        $request->validate([
-            'delivery.name' => 'required|string|max:255',
-            'delivery.email' => 'required|email|max:255',
-            'delivery.country' => 'required|string|max:255',
-            'delivery.city' => 'required|string|max:255',
-            'delivery.phone' => 'required|string',
-            'delivery.company_name' => 'nullable|string|max:255',
-            'delivery.vat_number' => 'nullable|string|max:50',
-            'payment_method' => 'required|string|in:credit_card',
-            'delivery_method' => 'required|string|in:dhl,fedex',
-            'payment_method_id' => 'required|string',
-        ]);
-
-        $cart = session('cart', []);
-        if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
-        }
-
-        // Prepare order data
-        $items = [];
-        $total = 0;
-        foreach ($cart as $productId => $quantity) {
-            $product = Product::find($productId);
-            if ($product) {
-                $subtotal = $product->price * $quantity;
-                $items[] = [
-                    'product_id' => $product->id,
-                    'name' => $product->name,
-                    'quantity' => $quantity,
-                    'price' => $product->price,
-                    'subtotal' => $subtotal,
-                ];
-                $total += $subtotal;
-            }
-        }
-
-        if (empty($items)) {
-            return redirect()->route('cart.index')->with('error', 'No valid products found in cart.');
-        }
-
-        // Save order to database
         try {
-            $order = $this->saveOrder($request, $items, $total);
-
-            // Process Stripe payment
-            Stripe::setApiKey(config('services.stripe.secret'));
-            $paymentIntent = PaymentIntent::create([
-                'amount' => $total * 100, // Convert to cents
-                'currency' => 'usd',
-                'payment_method' => $request->payment_method_id,
-                'confirmation_method' => 'manual',
-                'confirm' => true,
-                'metadata' => ['order_id' => $order->id],
+            $request->validate([
+                'delivery.name' => 'required|string|max:255',
+                'delivery.email' => 'required|email|max:255',
+                'delivery.country' => 'required|string|max:255',
+                'delivery.city' => 'required|string|max:255',
+                'delivery.phone' => 'required|string',
+                'delivery.company_name' => 'nullable|string|max:255',
+                'delivery.vat_number' => 'nullable|string|max:50',
+                'payment_method' => 'required|string|in:credit_card',
+                'delivery_method' => 'required|string|in:dhl,fedex',
+                'payment_method_id' => 'required|string',
+                'order_id' => 'nullable|exists:orders,id',
             ]);
 
-            // Update order status
-            $order->update(['status' => 'completed']);
+            // Log request data
+            Log::info('Checkout Request', ['data' => $request->all()]);
 
-            // Clear session
-            session()->forget(['cart', 'delivery', 'payment_method', 'delivery_method', 'buy_now']);
+            // Check for resubmission with order_id
+            if ($request->has('order_id')) {
+                $order = Order::findOrFail($request->order_id);
+                if ($order->status === 'completed') {
+                    return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
+                }
+                try {
+                    Stripe::setApiKey(config('services.stripe.secret'));
+                    $paymentIntent = PaymentIntent::retrieve($order->payment_intent_id ?? '');
+                    if ($paymentIntent->status === 'succeeded') {
+                        $order->update(['status' => 'completed']);
+                        session()->forget(['cart', 'delivery', 'payment_method', 'delivery_method', 'buy_now']);
+                        return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
+                    }
+                    return response()->json(['error' => 'Payment not completed.']);
+                } catch (\Exception $e) {
+                    Log::error('Checkout Resubmission Error', ['error' => $e->getMessage(), 'order_id' => $order->id, 'trace' => $e->getTraceAsString()]);
+                    return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
+                }
+            }
 
-            return redirect()->route('order.confirmation', $order->id)->with('success', 'Payment successful! Your order has been placed.');
+            $cart = session('cart', []);
+            if (empty($cart)) {
+                return response()->json(['error' => 'Your cart is empty.']);
+            }
+
+            // Prepare order data
+            $items = [];
+            $total = 0;
+            foreach ($cart as $productId => $quantity) {
+                $product = Product::find($productId);
+                if ($product) {
+                    $subtotal = $product->price * $quantity;
+                    $items[] = [
+                        'product_id' => $product->id,
+                        'name' => $product->name,
+                        'quantity' => $quantity,
+                        'price' => $product->price,
+                        'subtotal' => $subtotal,
+                    ];
+                    $total += $subtotal;
+                }
+            }
+
+            if (empty($items)) {
+                return response()->json(['error' => 'No valid products found in cart.']);
+            }
+
+            // Save order in a transaction
+            DB::beginTransaction();
+            try {
+                $order = $this->saveOrder($request, $items, $total);
+
+                // Process Stripe payment
+                Stripe::setApiKey(config('services.stripe.secret'));
+                $paymentIntent = PaymentIntent::create([
+                    'amount' => $total * 100,
+                    'currency' => 'usd',
+                    'payment_method' => $request->payment_method_id,
+                    'metadata' => ['order_id' => $order->id],
+                    'automatic_payment_methods' => [
+                        'enabled' => true,
+                        'allow_redirects' => 'never',
+                    ],
+                ]);
+
+                // Save payment_intent_id
+                $order->update(['payment_intent_id' => $paymentIntent->id]);
+
+                if ($paymentIntent->status === 'requires_action' || $paymentIntent->status === 'requires_confirmation') {
+                    return response()->json([
+                        'requires_action' => true,
+                        'client_secret' => $paymentIntent->client_secret,
+                        'order_id' => $order->id,
+                    ]);
+                }
+
+                // Update order status
+                $order->update(['status' => 'completed']);
+                DB::commit();
+
+                // Clear session
+                session()->forget(['cart', 'delivery', 'payment_method', 'delivery_method', 'buy_now']);
+
+                return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                if (isset($order)) {
+                    $order->delete();
+                }
+                Log::error('Checkout Error', ['error' => $e->getMessage(), 'order_data' => $request->all(), 'trace' => $e->getTraceAsString()]);
+                return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
+            }
         } catch (\Exception $e) {
-            Log::error('Checkout Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
-            return redirect()->route('checkout')->with('error', 'Checkout failed: ' . $e->getMessage());
+            Log::error('Checkout Unexpected Error', ['error' => $e->getMessage(), 'request' => $request->all(), 'trace' => $e->getTraceAsString()]);
+            return response()->json(['error' => 'Unexpected error: ' . $e->getMessage()], 500);
         }
     }
 
@@ -224,73 +274,122 @@ class CartController extends Controller
 
     public function processBuyNowCheckout(Request $request)
     {
-        $request->validate([
-            'delivery.name' => 'required|string|max:255',
-            'delivery.email' => 'required|email|max:255',
-            'delivery.country' => 'required|string|max:255',
-            'delivery.city' => 'required|string|max:255',
-            'delivery.phone' => 'required|string',
-            'delivery.company_name' => 'nullable|string|max:255',
-            'delivery.vat_number' => 'nullable|string|max:50',
-            'payment_method' => 'required|string|in:credit_card',
-            'delivery_method' => 'required|string|in:dhl,fedex',
-            'payment_method_id' => 'required|string',
-        ]);
-
-        $buyNow = session('buy_now');
-        if (!$buyNow) {
-            return redirect()->route('products')->with('error', 'No product selected for purchase.');
-        }
-
-        $product = Product::find($buyNow['product_id']);
-        if (!$product) {
-            return redirect()->route('products')->with('error', 'Selected product is no longer available.');
-        }
-
-        // Prepare order data
-        $quantity = $buyNow['quantity'];
-        $subtotal = $product->price * $quantity;
-        $items = [[
-            'product_id' => $product->id,
-            'name' => $product->name,
-            'quantity' => $quantity,
-            'price' => $product->price,
-            'subtotal' => $subtotal,
-        ]];
-        $total = $subtotal;
-
-        // Save order to database
         try {
-            $order = $this->saveOrder($request, $items, $total);
-
-            // Process Stripe payment
-            Stripe::setApiKey(config('services.stripe.secret'));
-            $paymentIntent = PaymentIntent::create([
-                'amount' => $total * 100, // Convert to cents
-                'currency' => 'usd',
-                'payment_method' => $request->payment_method_id,
-                'confirmation_method' => 'manual',
-                'confirm' => true,
-                'metadata' => ['order_id' => $order->id],
+            $request->validate([
+                'delivery.name' => 'required|string|max:255',
+                'delivery.email' => 'required|email|max:255',
+                'delivery.country' => 'required|string|max:255',
+                'delivery.city' => 'required|string|max:255',
+                'delivery.phone' => 'required|string',
+                'delivery.company_name' => 'nullable|string|max:255',
+                'delivery.vat_number' => 'nullable|string|max:50',
+                'payment_method' => 'required|string|in:credit_card',
+                'delivery_method' => 'required|string|in:dhl,fedex',
+                'payment_method_id' => 'required|string',
+                'order_id' => 'nullable|exists:orders,id',
             ]);
 
-            // Update order status
-            $order->update(['status' => 'completed']);
+            // Log request data
+            Log::info('Buy Now Checkout Request', ['data' => $request->all()]);
 
-            // Clear session
-            session()->forget(['buy_now', 'delivery', 'payment_method', 'delivery_method']);
+            // Check for resubmission with order_id
+            if ($request->has('order_id')) {
+                $order = Order::findOrFail($request->order_id);
+                if ($order->status === 'completed') {
+                    return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
+                }
+                try {
+                    Stripe::setApiKey(config('services.stripe.secret'));
+                    $paymentIntent = PaymentIntent::retrieve($order->payment_intent_id ?? '');
+                    if ($paymentIntent->status === 'succeeded') {
+                        $order->update(['status' => 'completed']);
+                        session()->forget(['buy_now', 'delivery', 'payment_method', 'delivery_method']);
+                        return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
+                    }
+                    return response()->json(['error' => 'Payment not completed.']);
+                } catch (\Exception $e) {
+                    Log::error('Buy Now Checkout Resubmission Error', ['error' => $e->getMessage(), 'order_id' => $order->id, 'trace' => $e->getTraceAsString()]);
+                    return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
+                }
+            }
 
-            return redirect()->route('order.confirmation', $order->id)->with('success', 'Payment successful! Your order has been placed.');
+            $buyNow = session('buy_now');
+            if (!$buyNow) {
+                return response()->json(['error' => 'No product selected for purchase.']);
+            }
+
+            $product = Product::find($buyNow['product_id']);
+            if (!$product) {
+                return response()->json(['error' => 'Selected product is no longer available.']);
+            }
+
+            // Prepare order data
+            $quantity = $buyNow['quantity'];
+            $subtotal = $product->price * $quantity;
+            $items = [[
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'quantity' => $quantity,
+                'price' => $product->price,
+                'subtotal' => $subtotal,
+            ]];
+            $total = $subtotal;
+
+            // Save order in a transaction
+            DB::beginTransaction();
+            try {
+                $order = $this->saveOrder($request, $items, $total);
+
+                // Process Stripe payment
+                Stripe::setApiKey(config('services.stripe.secret'));
+                $paymentIntent = PaymentIntent::create([
+                    'amount' => $total * 100,
+                    'currency' => 'usd',
+                    'payment_method' => $request->payment_method_id,
+                    'metadata' => ['order_id' => $order->id],
+                    'automatic_payment_methods' => [
+                        'enabled' => true,
+                        'allow_redirects' => 'never',
+                    ],
+                ]);
+
+                // Save payment_intent_id
+                $order->update(['payment_intent_id' => $paymentIntent->id]);
+
+                if ($paymentIntent->status === 'requires_action' || $paymentIntent->status === 'requires_confirmation') {
+                    return response()->json([
+                        'requires_action' => true,
+                        'client_secret' => $paymentIntent->client_secret,
+                        'order_id' => $order->id,
+                    ]);
+                }
+
+                // Update order status
+                $order->update(['status' => 'completed']);
+                DB::commit();
+
+                // Clear session
+                session()->forget(['buy_now', 'delivery', 'payment_method', 'delivery_method']);
+
+                return response()->json(['success' => true, 'redirect' => route('order.confirmation', $order->id)]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                if (isset($order)) {
+                    $order->delete();
+                }
+                Log::error('Buy Now Checkout Error', ['error' => $e->getMessage(), 'order_data' => $request->all(), 'trace' => $e->getTraceAsString()]);
+                return response()->json(['error' => 'Checkout failed: ' . $e->getMessage()]);
+            }
         } catch (\Exception $e) {
-            Log::error('Buy Now Checkout Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
-            return redirect()->route('cart.buy-now-checkout')->with('error', 'Checkout failed: ' . $e->getMessage());
+            Log::error('Buy Now Checkout Unexpected Error', ['error' => $e->getMessage(), 'request' => $request->all(), 'trace' => $e->getTraceAsString()]);
+            return response()->json(['error' => 'Unexpected error: ' . $e->getMessage()], 500);
         }
     }
 
     protected function saveOrder(Request $request, array $items, float $total)
     {
         $orderData = [
-            'user_id' => Auth::id() ?? null, // Allow guest orders
+            'user_id' => Auth::id() ?? null,
             'total' => $total,
             'status' => 'pending',
             'delivery_name' => $request->delivery['name'],

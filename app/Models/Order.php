@@ -27,6 +27,7 @@ class Order extends Model
         'delivery_vat_number',
         'payment_method',
         'delivery_method',
+        'payment_intent_id',
     ];
 
     /**
